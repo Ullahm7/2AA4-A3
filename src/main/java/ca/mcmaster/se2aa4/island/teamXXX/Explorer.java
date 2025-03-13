@@ -12,6 +12,10 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
 
+    Drone drone;
+    Map map;
+    DroneController control;
+
     @Override
     public void initialize(String s) {
         logger.info("** Initializing the Exploration Command Center");
@@ -20,7 +24,11 @@ public class Explorer implements IExplorerRaid {
 
         String direction = info.getString("heading");
         Integer batteryLevel = info.getInt("budget");
-        
+
+        map = new Map();
+        drone = new Drone(batteryLevel, direction, map);
+        control = new DroneController(drone, map);
+
         logger.info("The drone is facing {}", direction);
         logger.info("Battery level is {}", batteryLevel);
     }
@@ -49,5 +57,11 @@ public class Explorer implements IExplorerRaid {
     public String deliverFinalReport() {
         return "no creek found";
     }
-
+    public static void main(String[] args) {
+        Explorer e = new Explorer();
+        e.initialize("{\"budget\":1000,\"heading\":\"N\"}");
+        e.takeDecision();
+        e.acknowledgeResults("{\"cost\":1,\"status\":\"success\",\"extras\":{\"range\":1}}");
+        e.deliverFinalReport();
+    }
 }
