@@ -1,13 +1,22 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 
 public class Drone {
+
     private Integer batteryLevel;
     InterestPoints direction;
-    public Drone(Integer batteryLevel, String direction, Map map) {
-        //TODO Auto-generated constructor stub
+    LocationPoint currentLocation;
+    Heading currentHeading;
+
+    public enum Heading {
+        N, E, S, W
     }
 
-    public void fly(){
+    public Drone(Integer batteryLevel, String currentHeading, MapRepresenter map) {
+        this.batteryLevel = batteryLevel;
+        this.currentHeading = Heading.valueOf(currentHeading);
+    }
+
+    public void fly(LocationPoint currentLocation){
 
     }
 
@@ -23,7 +32,7 @@ public class Drone {
     public boolean stop(Integer batteryLevel){
 
         return false;
-        
+
     }
     
 }

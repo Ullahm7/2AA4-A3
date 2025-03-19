@@ -11,12 +11,12 @@ import java.util.ArrayList;
 
 public class InterestPoints {
 
-    private String id;
+    private String identifier;
     private String kind;
     private double[] location; //contains x and y
 
-    public InterestPoints(String id, String type, double[] location){
-        this.id = id;
+    public InterestPoints(String identifier, String type, double[] location){
+        this.identifier = identifier;
         this.kind = kind;
         this.location = location;
     }
