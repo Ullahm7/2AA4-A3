@@ -72,7 +72,7 @@ public class Drone {
         this.batteryLevel = batteryLevel;
         this.currentHeading = Heading.valueOf(initialHeading);
         this.initialHeading = Heading.valueOf(initialHeading);
-        this.currentLocation = new LocationLocationPoint(0, 0);
+        this.currentLocation = new LocationPoint(0, 0);
         
     }
 
@@ -150,6 +150,18 @@ public class Drone {
         return decisionTaken("heading", heading.toString());
     }
 
+    public String echo(Heading heading){
+        return decisionTaken("echo", heading.toString());
+    }
+
+    public String scan(){
+        return decisionTaken("scan");
+    }
+
+    public String stop(){
+        return decisionTaken("stop");
+    }
+
     private String decisionTaken(String command){
         return "null";
     }
@@ -157,7 +169,7 @@ public class Drone {
         return "null";
     }
 
-    public void fly(LocationLocationPoint currentLocation){
+    public void fly(LocationPoint currentLocation){
 
     }
 
