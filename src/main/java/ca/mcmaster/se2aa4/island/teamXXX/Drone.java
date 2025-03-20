@@ -1,7 +1,11 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Drone {
 
+    private final Logger logger = LogManager.getLogger(); 
     private Integer batteryLevel;
     InterestPoints direction;
     LocationPoint currentLocation;
@@ -14,61 +18,61 @@ public class Drone {
 
     //enums of heading directions 
     public enum Heading {
-        N, E, S, W
-    }
+        N, E, S, W;
 
-    //methods of turning directions:
-    //this turns the drone left depending on currentHeading
-    public Heading leftSide(Heading currentHeading) {
-        switch (currentHeading) {
-            case N:
-                return Heading.W;
-            case E:
-                return Heading.N;
-            case S:
-                return Heading.E;
-            case W:
-                return Heading.S;
-            default:
-                throw new IllegalArgumentException("Invalid heading: " + currentHeading);
+        // methods to quickly find direction on left, right and back sides
+        public Heading leftSide(Heading currentHeading) {
+            switch (currentHeading) {
+                case N:
+                    return W;
+                case E:
+                    return N;
+                case S:
+                    return E;
+                case W:
+                    return S;
+                default:
+                    throw new IllegalArgumentException("Invalid heading: " + currentHeading);
+            }
+        }
+    
+        public Heading rightSide(Heading currentHeading) {
+            switch (currentHeading) {
+                case N:
+                    return E;
+                case E:
+                    return S;
+                case S:
+                    return W;
+                case W:
+                    return N;
+                default:
+                    throw new IllegalArgumentException("Invalid heading: " + currentHeading);
+            }
+        }
+    
+        public Heading backSide(Heading currentHeading) {
+            switch (currentHeading) {
+                case N:
+                    return S;
+                case E:
+                    return W;
+                case S:
+                    return N;
+                case W:
+                    return E;
+                default:
+                    throw new IllegalArgumentException("Invalid heading: " + currentHeading);
+            }
         }
     }
 
-    public Heading rightSide(Heading currentHeading) {
-        switch (currentHeading) {
-            case N:
-                return Heading.E;
-            case E:
-                return Heading.S;
-            case S:
-                return Heading.W;
-            case W:
-                return Heading.N;
-            default:
-                throw new IllegalArgumentException("Invalid heading: " + currentHeading);
-        }
-    }
 
-    public Heading backSide(Heading currentHeading) {
-        switch (currentHeading) {
-            case N:
-                return Heading.S;
-            case E:
-                return Heading.W;
-            case S:
-                return Heading.N;
-            case W:
-                return Heading.E;
-            default:
-                throw new IllegalArgumentException("Invalid heading: " + currentHeading);
-        }
-    }
-
-
-
-    public Drone(Integer batteryLevel, String currentHeading, MapRepresenter map) {
+    public Drone(Integer batteryLevel, String initialHeading, MapRepresenter map) {
         this.batteryLevel = batteryLevel;
-        this.currentHeading = Heading.valueOf(currentHeading);
+        this.currentHeading = Heading.valueOf(initialHeading);
+        this.initialHeading = Heading.valueOf(initialHeading);
+        
     }
 
     public void fly(LocationPoint currentLocation){
