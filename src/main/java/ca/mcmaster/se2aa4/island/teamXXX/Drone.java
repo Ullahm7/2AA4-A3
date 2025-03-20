@@ -72,7 +72,7 @@ public class Drone {
         this.batteryLevel = batteryLevel;
         this.currentHeading = Heading.valueOf(initialHeading);
         this.initialHeading = Heading.valueOf(initialHeading);
-        this.currentLocation = new LocationPoint(0, 0);
+        this.currentLocation = new LocationLocationPoint(0, 0);
         
     }
 
@@ -106,6 +106,48 @@ public class Drone {
         }
 
         return decisionTaken("fly");
+    }
+
+    // this method also updates current location based on current heading and next heading
+    public String heading(Heading heading){
+        if (heading == currentHeading.leftSide(currentHeading)){
+            switch (currentHeading){
+                case N:
+                    currentLocation = new LocationPoint(currentLocation.getX() - 1, currentLocation.getY() + 1);
+                    break;
+                case E:
+                    currentLocation = new LocationPoint(currentLocation.getX() + 1, currentLocation.getY() + 1);
+                    break;
+                case S:
+                    currentLocation = new LocationPoint(currentLocation.getX() + 1, currentLocation.getY() - 1);
+                    break;
+                case W:
+                    currentLocation = new LocationPoint(currentLocation.getX() - 1, currentLocation.getY() - 1);
+                    break;
+                default:
+                    return null;
+            }
+        }
+
+        if (heading == currentHeading.rightSide(currentHeading)){
+            switch (currentHeading){
+                case N:
+                    currentLocation = new LocationPoint(currentLocation.getX() + 1, currentLocation.getY() + 1);
+                    break;
+                case E:
+                    currentLocation = new LocationPoint(currentLocation.getX() + 1, currentLocation.getY() - 1);
+                    break;
+                case S:
+                    currentLocation = new LocationPoint(currentLocation.getX() - 1, currentLocation.getY() - 1);
+                    break;
+                case W:
+                    currentLocation = new LocationPoint(currentLocation.getX() - 1, currentLocation.getY() + 1);
+                    break;
+                default:
+                    return null;
+            }
+        }
+        return decisionTaken("heading", heading.toString());
     }
 
     private String decisionTaken(String command){
