@@ -22,65 +22,10 @@ public class Control {
         this.drone = drone;
         this.map = map;
     }
-    // starts the mission
-    public void startMission(String action, JSONObject previousResponse){
-        List<String> temp = new ArrayList<String>();
-        Integer cost = previousResponse.getInt("cost");
-        temp.add(Integer.toString(previousResponse.getInt("cost")));
-        this.responseStorage.put("cost", temp);
-
-        temp = new ArrayList<String>();
-        temp.add(String.valueOf(previousResponse.getString("status")));
-        this.responseStorage.put("status", temp);
-
-        if (action.equals("echo")){
-            temp = new ArrayList<String>();
-            temp.add(String.valueOf(previousResponse.getJSONObject("extras").getInt("range")));
-            this.responseStorage.put("range", temp);
-
-            temp = new ArrayList<String>();
-            temp.add(previousResponse.getJSONObject("extras").getString("found"));
-            this.responseStorage.put("found", temp);
-
-        }
-        else if (action.equals("scan")){
-            temp = new ArrayList<String>();
-            JSONArray creeksArray = previousResponse.getJSONObject("extras").getJSONArray("creeks");
-            for (int i = 0; i < creeksArray.length(); i++) {
-                temp.add(creeksArray.getString(i));
-            }
-            this.responseStorage.put("creeks", temp);
-
-
-            temp = new ArrayList<String>();
-            JSONArray biomesArray = previousResponse.getJSONObject("extras").getJSONArray("biomes");
-            for (int i = 0; i < biomesArray.length(); i++) {
-                temp.add(biomesArray.getString(i));
-            }
-            this.responseStorage.put("biomes", temp);
-
-            temp = new ArrayList<String>();
-            JSONArray sitesArray = previousResponse.getJSONObject("extras").getJSONArray("sites");
-            for (int i = 0; i < sitesArray.length(); i++) {
-                temp.add(sitesArray.getString(i));
-            }
-            this.responseStorage.put("sites", temp);
-        }
-
-        for (Map.Entry<String, List<String>> entry : responseStorage.entrySet()) {
-            // Print the key
-            logger.info("Key: " + entry.getKey());
-            for (String value : entry.getValue()) {
-                // Print each value
-                logger.info("Value: " + value);
-            }
-        }
-
-        
-    }
+    // starts the mission, need to first initialize the control, e.g map and the drone
     public String nextDecision() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'nextDecision'");
+        return "null";
+        
     }
     
 }

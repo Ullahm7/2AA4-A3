@@ -6,11 +6,19 @@ import java.util.List;
 
 public class MapRepresenter {
 
+    //simple array list for pois that we are interested in
     public ArrayList<InterestPoints> pois = new ArrayList<>();
 
-    List<List<LocationPoint>> map = new ArrayList<>();
+    /*something like (x,y)(x,y)....
+     *               (x,y)(x,y)....
+     *                  .   .
+     *                  .   .
+     * for the map
+    */
+    List<List<LocationPoint>> map = new ArrayList<>(); 
 
-    public void scanResult(){
+    //should take in the biome, creek, or sites
+    public void storeScanResult(){
     
     }
     
