@@ -11,14 +11,14 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import java.util.ArrayList;
 
-public class MissionControl {
+public class Control {
 
     private final Logger logger = LogManager.getLogger();
     Drone drone;
     MapRepresenter map;
     HashMap<String, List<String>> responseStorage = new HashMap<String, List<String>>();
 
-    MissionControl(Drone drone, MapRepresenter map){
+    Control(Drone drone, MapRepresenter map){
         this.drone = drone;
         this.map = map;
     }
@@ -77,6 +77,10 @@ public class MissionControl {
         }
 
         
+    }
+    public String nextDecision() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'nextDecision'");
     }
     
 }
