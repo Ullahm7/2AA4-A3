@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.island.teamXXX;
+package ca.mcmaster.se2aa4.island.team25;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
