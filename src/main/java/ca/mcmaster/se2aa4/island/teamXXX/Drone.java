@@ -72,10 +72,50 @@ public class Drone {
         this.batteryLevel = batteryLevel;
         this.currentHeading = Heading.valueOf(initialHeading);
         this.initialHeading = Heading.valueOf(initialHeading);
+        this.currentLocation = new LocationPoint(0, 0);
         
     }
 
-    public void fly(LocationPoint currentLocation){
+    public String turnLeft() {
+        currentHeading = currentHeading.leftSide(currentHeading);
+        return decisionTaken("heading", currentHeading.toString());
+    }
+    
+    public String turnRight() {
+        currentHeading = currentHeading.rightSide(currentHeading);
+        return decisionTaken("heading", currentHeading.toString());
+    }
+
+    // this method also updates the current location of the drone
+    public String fly(){
+        switch (currentHeading){
+            case N:
+                currentLocation = new LocationPoint(currentLocation.getX(), currentLocation.getY() + 1);
+                break;
+            case E:
+                currentLocation = new LocationPoint(currentLocation.getX() + 1, currentLocation.getY());
+                break;
+            case S:
+                currentLocation = new LocationPoint(currentLocation.getX(), currentLocation.getX() - 1);
+                break;
+            case W:
+                currentLocation = new LocationPoint(currentLocation.getX() - 1, currentLocation.getY());
+                break;
+            default:
+                break;
+        }
+
+        return decisionTaken("fly");
+    }
+
+    private String decisionTaken(String command){
+        return "null";
+    }
+    private String decisionTaken(String command, String direction){
+        return "null";
+    }
+
+    public void fly(LocationLocationPoint currentLocation){
 
     }
 

@@ -36,7 +36,6 @@ public class InterestPoints {
     public void setIdentifier(String identifier){
         
     }
-
    
     public ArrayList<String> getInfo(){
         return null;
