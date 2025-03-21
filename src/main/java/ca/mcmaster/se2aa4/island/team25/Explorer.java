@@ -18,6 +18,7 @@ public class Explorer implements IExplorerRaid {
     Drone drone;
     MapRepresenter map;
     Control control;
+    private Patroller patroller;
 
     @Override
     public void initialize(String s) {
@@ -28,16 +29,17 @@ public class Explorer implements IExplorerRaid {
         String direction = info.getString("heading");
         Integer batteryLevel = info.getInt("budget");
 
+        this.patroller = new Patroller();
+
         logger.info("The drone is facing {}", direction);
         logger.info("Battery level is {}", batteryLevel);
     }
 
     @Override
     public String takeDecision() {
-        JSONObject decision = new JSONObject();
-        decision.put("action", "stop"); // we stop the exploration immediately
-        logger.info("** Decision: {}", decision.toString());
-        return decision.toString();
+        String decision = patroller.nextAction();
+        logger.info("** Decision: {}", decision);
+        return decision;
     }
 
     @Override
@@ -51,6 +53,7 @@ public class Explorer implements IExplorerRaid {
         logger.info("The status of the drone is {}", status);
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
+        patroller.readAction(response);
     }
 
     @Override
@@ -58,11 +61,4 @@ public class Explorer implements IExplorerRaid {
         return "no creek found";
     }
 
-    public static void main(String[] args) {
-        Explorer e = new Explorer();
-        e.initialize("{\"budget\":1000,\"heading\":\"N\"}");
-        e.takeDecision();
-        e.acknowledgeResults("{\"cost\":1,\"status\":\"success\",\"extras\":{\"range\":1}}");
-        e.deliverFinalReport();
-    }
 }
