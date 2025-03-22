@@ -35,7 +35,7 @@ public class InterestPoint implements Point {
         return this.y;
     }
 
-    public String getType() {
+    public Kind getType() {
         return type;
     }
 

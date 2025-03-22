@@ -12,7 +12,7 @@ public class Map {
     }
 
     public void putPoint(String id, int x, int y, Kind typeKind) {
-        InterestPoint point = new InterestPoint(id, x, y, typeKind)
+        InterestPoint point = new InterestPoint(id, x, y, typeKind);
         if (point.getType() == Kind.EmergencySite) {
             mainPoints.add(0, point);
             eQuant++;
