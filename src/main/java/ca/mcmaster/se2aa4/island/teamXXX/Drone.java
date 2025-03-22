@@ -12,6 +12,7 @@ public class Drone {
     LocationPoint currentLocation;
     Heading currentHeading;
     Heading initialHeading;
+    public MapRepresenter map;
 
     //decision making variables:
     String action;
@@ -23,6 +24,7 @@ public class Drone {
         this.currentHeading = Heading.valueOf(initialHeading);
         this.initialHeading = Heading.valueOf(initialHeading);
         this.currentLocation = new LocationPoint(0, 0); 
+        this.map = map;
     }
 
     //enums of heading directions 

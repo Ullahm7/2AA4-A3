@@ -1,7 +1,6 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 import ca.mcmaster.se2aa4.island.teamXXX.InterestPoints;
 import ca.mcmaster.se2aa4.island.teamXXX.LocationPoint;
-import eu.ace_design.island.game.PointOfInterest;
 import ca.mcmaster.se2aa4.island.teamXXX.Drone.Heading;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +14,10 @@ public class MapRepresenter {
     private final Logger logger = LogManager.getLogger();
     public Boolean initialized = false;
     //simple array list for pois that we are interested in
-    public ArrayList<InterestPoints> pois = new ArrayList<>();
+    public List<InterestPoints> pois = new ArrayList<>();
+    public List<InterestPoints> creeks = new ArrayList<>();
+    public InterestPoints closestCreek;
+    public InterestPoints site;
 
     /*something like (x,y)(x,y)....
      *               (x,y)(x,y)....
@@ -25,7 +27,20 @@ public class MapRepresenter {
     */
     List<List<LocationPoint>> map = new ArrayList<>(); 
 
-    //should take in the biome, creek, or sites
+    public MapRepresenter() {
+        //initialize with these dimensions, will need to refactor for different maps (need to get dimensions)
+        for (int i = 0; i < 200; i++) {
+            List<LocationPoint> row = new ArrayList<>();
+            for (int j = 0; j < 200; j++) {
+                LocationPoint point = new LocationPoint(i, j);
+                row.add(point);
+            }
+            map.add(row);
+        }
+    }
+
+    
+    //should take in the biome, creek, or sites, using the storage class
     public void storeScanResults(HashMap<String, List<String>> scanResults, LocationPoint currentLocation){
         // store the scan results in the map
 
