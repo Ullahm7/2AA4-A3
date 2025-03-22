@@ -93,21 +93,21 @@ public class Drone {
     public String fly(){
         switch (currentHeading){
             case N:
-                currentLocation = new LocationPoint(currentLocation.getX(), currentLocation.getY() + 1); //moves up
+                map.map.get(currentLocation.getX() - 1).get(currentLocation.getY()); //moves up
                 break;
             case E:
-                currentLocation = new LocationPoint(currentLocation.getX() + 1, currentLocation.getY()); //moves right
+                map.map.get(currentLocation.getX()).get(currentLocation.getY() + 1); //moves right
                 break;
             case S:
-                currentLocation = new LocationPoint(currentLocation.getX(), currentLocation.getY() - 1); //moves down
+                map.map.get(currentLocation.getX() + 1).get(currentLocation.getY()); //moves down
                 break;
             case W:
-                currentLocation = new LocationPoint(currentLocation.getX() - 1, currentLocation.getY()); //moves left
+                map.map.get(currentLocation.getX()).get(currentLocation.getY() - 1); //moves left
                 break;
             default:
                 break;
         }
-
+        logger.info(currentLocation.getX() + " " + currentLocation.getY());
         return decisionTaken("fly");
     }
 
