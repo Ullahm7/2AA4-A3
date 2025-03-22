@@ -19,14 +19,12 @@ public class Patroller {
 
     public String nextAction() {
         JSONObject action = new JSONObject();
-
         action = currentSearch.nextStep();
-        logger.info(action.toString());
         return action.toString();
     }
 
-    public void readAction(JSONObject response) {
-        drone.batteryLost(response.getInt("cost"));
-        currentSearch.giveInfo(response);
+    public void readAction(JSONObject cost, JSONObject extra) {
+        drone.batteryLost(cost.getInt("cost"));
+        currentSearch.giveInfo(extra);
     }
 }
