@@ -14,11 +14,13 @@ public class InterestPoint implements Point{
     private final String identifier;
     private double x;
     private double y;
+    private final String type;
 
-    public InterestPoint(String identifier, double x, double y){
+    public InterestPoint(String identifier, double x, double y, String type){
         this.identifier = identifier;
         this.x = x;
         this.y = y;
+        this.type = type;
     }
 
     public String returnID(){
@@ -34,7 +36,7 @@ public class InterestPoint implements Point{
     }
 
     public double distanceTo(Point p) {
-
+        return Math.sqrt(Math.pow(this.x - p.x, 2) + Math.pow(this.y - p.y, 2));
     }
     
 }
