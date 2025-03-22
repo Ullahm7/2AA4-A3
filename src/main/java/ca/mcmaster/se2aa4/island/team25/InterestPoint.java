@@ -1,7 +1,5 @@
 package ca.mcmaster.se2aa4.island.team25;
 
-import java.util.ArrayList;
-
 /*looking at _pois.json we get info on this: 
  * "uid": "1f3f5c9f-8a64-4ab1-bd1a-c8fa705fec56",
         "kind": "Creek",
@@ -36,7 +34,11 @@ public class InterestPoint implements Point{
     }
 
     public double distanceTo(Point p) {
+<<<<<<< HEAD
         return Math.sqrt(Math.pow(this.x - p.x, 2) + Math.pow(this.y - p.y, 2));
+=======
+        return 0;
+>>>>>>> 7b0b72ff8a038da9231aea8b9c34e1038b3555fe
     }
     
 }

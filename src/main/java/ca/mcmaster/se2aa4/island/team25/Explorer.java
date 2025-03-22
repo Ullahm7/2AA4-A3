@@ -17,6 +17,7 @@ public class Explorer implements IExplorerRaid {
 
     @Override
     public void initialize(String s) {
+
         logger.info("** Initializing the Exploration Command Center");
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Initialization info:\n {}", info.toString(2));
@@ -28,13 +29,13 @@ public class Explorer implements IExplorerRaid {
         Drone drone = new Drone(batteryLevel, direction.charAt(0));
         this.patroller = new Patroller(drone, map);
 
-
         logger.info("The drone is facing {}", direction);
         logger.info("Battery level is {}", batteryLevel);
     }
 
     @Override
     public String takeDecision() {
+
         String decision = patroller.nextAction();
         logger.info("** Decision: {}", decision);
         return decision;
