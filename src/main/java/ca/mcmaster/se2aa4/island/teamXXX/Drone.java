@@ -13,7 +13,7 @@ public class Drone {
     Heading currentHeading;
     Heading initialHeading;
     public MapRepresenter map;
-
+    Boolean spawnedFacingGround;
     //decision making variables:
     String action;
     String decision;
@@ -90,24 +90,32 @@ public class Drone {
     }
 
     //updates current location by one coord, the fly method continues to go in that direction, flys forward
-    public String fly(){
-        switch (currentHeading){
-            case N:
-                map.map.get(currentLocation.getX() - 1).get(currentLocation.getY()); //moves up
-                break;
-            case E:
-                map.map.get(currentLocation.getX()).get(currentLocation.getY() + 1); //moves right
-                break;
-            case S:
-                map.map.get(currentLocation.getX() + 1).get(currentLocation.getY()); //moves down
-                break;
-            case W:
-                map.map.get(currentLocation.getX()).get(currentLocation.getY() - 1); //moves left
-                break;
-            default:
-                break;
+    public String fly() {
+        try {
+
+            switch (currentHeading) {
+                case N:
+                    currentLocation = map.map.get(currentLocation.getX() - 1).get(currentLocation.getY());
+                    break;
+                case E:
+                    currentLocation = map.map.get(currentLocation.getX()).get(currentLocation.getY() + 1);
+                    break;
+                case S:
+                    currentLocation = map.map.get(currentLocation.getX() + 1).get(currentLocation.getY());
+                    break;
+                case W:
+                    currentLocation = map.map.get(currentLocation.getX()).get(currentLocation.getY() - 1);
+                    break;
+                default:
+                    break;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            logger.info("Out of bounds");
+            return decisionTaken("stop");
         }
+
         logger.info(currentLocation.getX() + " " + currentLocation.getY());
+
         return decisionTaken("fly");
     }
 
