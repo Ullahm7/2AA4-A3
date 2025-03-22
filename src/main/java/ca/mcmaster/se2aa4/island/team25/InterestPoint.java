@@ -21,19 +21,19 @@ public class InterestPoint implements Point{
         this.y = y;
     }
 
-    public String getId(){
+    public String returnID(){
         return this.identifier;
     }
     
-    double getX() {
+    public double getX() {
         return this.x;
     }
 
-    double getY() {
+    public double getY() {
         return this.y;
     }
 
-    double distanceTo(Point p) {
+    public double distanceTo(Point p) {
 
     }
     

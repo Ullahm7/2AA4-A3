@@ -5,9 +5,10 @@ import org.json.JSONObject;
 public class Patroller {
 
     private JSONObject lastResponse;
+    boolean islandFound = false;
 
     Patroller(Drone drone, Map map) {
-
+        
     }
 
     public String nextAction() {
