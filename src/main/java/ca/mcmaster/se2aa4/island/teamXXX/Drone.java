@@ -8,7 +8,7 @@ public class Drone {
     //variable declaration
     private final Logger logger = LogManager.getLogger(); 
     private Integer batteryLevel;
-    String direction;
+    Heading direction;
     LocationPoint currentLocation;
     Heading currentHeading;
     Heading initialHeading;
@@ -120,97 +120,143 @@ public class Drone {
     }
 
     //this updates currentHeading and allows for the next heading to be a specific turn 
-    public String heading(Heading heading){ 
-        if (heading == currentHeading.leftSide(currentHeading)){ //checks if left turn is valid, e.g if it is going E, can't make W turns 
-            switch (currentHeading){
-                case N:
-                    currentLocation = new LocationPoint(currentLocation.getX() - 1, currentLocation.getY() + 1);
-                    break;
-                case E:
-                    currentLocation = new LocationPoint(currentLocation.getX() + 1, currentLocation.getY() + 1);
-                    break;
-                case S:
-                    currentLocation = new LocationPoint(currentLocation.getX() + 1, currentLocation.getY() - 1);
-                    break;
-                case W:
-                    currentLocation = new LocationPoint(currentLocation.getX() - 1, currentLocation.getY() - 1);
-                    break;
-                default:
-                    return null;
-            }
-        }
+    public void initializeCurrentLocation(Integer leftX, Integer topY, Boolean spawnedFacingGround) {
+        int x;
+        int y;
+        this.spawnedFacingGround = spawnedFacingGround;
 
-        if (heading == currentHeading.rightSide(currentHeading)){
-            switch (currentHeading){
-                case N:
-                    currentLocation = new LocationPoint(currentLocation.getX() + 1, currentLocation.getY() + 1);
-                    break;
-                case E:
-                    currentLocation = new LocationPoint(currentLocation.getX() + 1, currentLocation.getY() - 1);
-                    break;
-                case S:
-                    currentLocation = new LocationPoint(currentLocation.getX() - 1, currentLocation.getY() - 1);
-                    break;
-                case W:
-                    currentLocation = new LocationPoint(currentLocation.getX() - 1, currentLocation.getY() + 1);
-                    break;
-                default:
-                    return null;
-            }
-            //may need to add more instances
+        // we didnt change heading and so leftX and topY are the same as the current
+        // location
+        if (spawnedFacingGround) {
+            x = topY;
+            y = leftX;
         }
-        return decisionTaken("heading", heading.toString()); //returns a valid heading and changes currentLocation
+        // since we changed heading, leftX and topY are off by a bit, the 100 we
+        // intialized currentLocation at (100, 100)
+        else {
+            x = topY + currentLocation.getY() - 100;
+            y = leftX + currentLocation.getX() - 100;
+        }
+        logger.info(x);
+        logger.info(y);
+        currentLocation = map.map.get(x).get(y);
     }
 
-    public String echo(Heading heading){
+    // this method also updates current location based on current heading and next
+    // heading
+    public String heading(Heading heading) {
+        if (heading == currentHeading || heading == currentHeading.backSide(currentHeading)) {
+            throw new IllegalArgumentException("Invalid heading");
+        }
+        try {
+            if (heading == currentHeading.leftSide(currentHeading)) {
+                switch (currentHeading) {
+                    case N:
+                        currentLocation = map.map.get(currentLocation.getX() - 1)
+                                .get(currentLocation.getY() - 1);
+                        break;
+                    case E:
+                        currentLocation = map.map.get(currentLocation.getX() - 1)
+                                .get(currentLocation.getY() + 1);
+                        break;
+                    case S:
+                        currentLocation = map.map.get(currentLocation.getX() + 1)
+                                .get(currentLocation.getY() + 1);
+                        break;
+                    case W:
+                        currentLocation = map.map.get(currentLocation.getX() + 1)
+                                .get(currentLocation.getY() - 1);
+                        break;
+                    default:
+                        return null;
+                }
+            }
+    
+            if (heading == currentHeading.rightSide(currentHeading)) {
+                switch (currentHeading) {
+                    case N:
+                        currentLocation = map.map.get(currentLocation.getX() - 1)
+                                .get(currentLocation.getY() + 1);
+                        break;
+                    case E:
+                        currentLocation = map.map.get(currentLocation.getX() + 1)
+                                .get(currentLocation.getY() + 1);
+                        break;
+                    case S:
+                        currentLocation = map.map.get(currentLocation.getX() + 1)
+                                .get(currentLocation.getY() - 1);
+                        break;
+                    case W:
+                        currentLocation = map.map.get(currentLocation.getX() - 1)
+                                .get(currentLocation.getY() - 1);
+                        break;
+                    default:
+                        return null;
+                }
+            }
+        } catch (IndexOutOfBoundsException e) {
+            logger.info("Out of bounds");
+            return decisionTaken("stop");
+        }
+        logger.info(currentLocation.getX() + " " + currentLocation.getY());
+        return decisionTaken("heading", heading.toString());
+    }
+
+    public String echo(Heading heading) {
         return decisionTaken("echo", heading.toString());
     }
 
-    public String scan(){
+    public String scan() {
         return decisionTaken("scan");
     }
 
-    public String stop(){
+    public String stop() {
         return decisionTaken("stop");
     }
 
-    //takes in fly, scan, and stop command, they don't require a direction (will change)
-    private String decisionTaken(String command){
+    public Integer getBatteryLevel() {
+        return batteryLevel;
+    }
 
-        if (!command.equals("fly") && !command.equals("scan") && !command.equals("stop")){ 
-            logger.info("Invalid command");
-            System.exit(0);
+    public String getAction() {
+        return action;
+    }
+
+    String decisionTaken(String command) {
+
+        // ensures the commands are valid
+        if (!command.equals("fly") && !command.equals("scan") && !command.equals("stop")) {
+            throw new IllegalArgumentException("Invalid command");
         }
         action = command;
-        String nextDecision = "{\"action\": \""+ command +"\"}";
+        String nextDecision = "{\"action\": \"" + command + "\"}";
         return nextDecision;
     }
 
-    //takes in only echo and heading as they will require a direction (will change)
-    private String decisionTaken(String command, String direction){
+    String decisionTaken(String command, String direction) {
 
-        if (!command.equals("echo") && !command.equals("heading")){
-            logger.info("Invalid command");
-            System.exit(0);
+        // need to make sure that the commands are valid
+        if (!command.equals("echo") && !command.equals("heading")) {
+            throw new IllegalArgumentException("Invalid command");
+        }
+        // ensures the direction is valid
+        if (!direction.equals("N") && !direction.equals("E") && !direction.equals("S") && !direction.equals("W")) {
+            throw new IllegalArgumentException("Invalid direction");
         }
 
-        if (!direction.equals("N") && !direction.equals("E") && !direction.equals("S") && !direction.equals("W")){
-            logger.info(direction);
-            logger.info("Invalid direction");
-            System.exit(0);
+        // if the command is heading, then the currentDirection is the new heading
+        if (command.equals("heading")) {
+            this.currentHeading = Heading.valueOf(direction);
         }
 
-        //if the command is heading, then the currentDirection is the new heading
-        if (command.equals("heading")){
-            this.currentHeading = Heading.valueOf(direction); //
-        }
-
-        //store the parameters of the next decision
+        // store the parameters of the next decision
         action = command;
-        this.direction = direction; 
+        this.direction = Heading.valueOf(direction);
 
-        String nextDecision = "{\"action\": \""+ command +"\", \"parameters\": { \"direction\": \"" + direction +"\"}}";
+        String nextDecision = "{\"action\": \"" + command + "\", \"parameters\": { \"direction\": \"" + direction
+                + "\"}}";
         return nextDecision;
     }
+    
 
 }
