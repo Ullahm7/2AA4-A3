@@ -9,24 +9,24 @@ import java.util.ArrayList;
         "y": 765.8454474411957
 */
 
-public class InterestPoint implements Point{
+public class InterestPoint implements Point {
 
     private final String identifier;
     private double x;
     private double y;
     private final String type;
 
-    public InterestPoint(String identifier, double x, double y, String type){
+    public InterestPoint(String identifier, double x, double y, String type) {
         this.identifier = identifier;
         this.x = x;
         this.y = y;
         this.type = type;
     }
 
-    public String returnID(){
+    public String returnID() {
         return this.identifier;
     }
-    
+
     public double getX() {
         return this.x;
     }
@@ -35,8 +35,12 @@ public class InterestPoint implements Point{
         return this.y;
     }
 
-    public double distanceTo(Point p) {
-        return Math.sqrt(Math.pow(this.x - p.x, 2) + Math.pow(this.y - p.y, 2));
+    public String getType() {
+        return type;
     }
-    
+
+    public double distanceTo(Point p) {
+        return Math.sqrt(Math.pow(this.x - p.getX(), 2) + Math.pow(this.y - p.getY(), 2));
+    }
+
 }
