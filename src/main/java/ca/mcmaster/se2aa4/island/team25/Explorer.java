@@ -13,11 +13,6 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
 
-    private JSONObject checker = new JSONObject(); // to store values to check for iteration
-
-    Drone drone;
-    MapRepresenter map;
-    Control control;
     private Patroller patroller;
 
     @Override

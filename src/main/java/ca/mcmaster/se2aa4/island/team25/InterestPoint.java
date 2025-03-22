@@ -9,13 +9,13 @@ import java.util.ArrayList;
         "y": 765.8454474411957
 */
 
-public class InterestPoints {
+public class InterestPoint {
 
     private String identifier;
     private String kind;
     private double[] location; //contains x and y
 
-    public InterestPoints(String identifier, String type, double[] location){
+    public InterestPoint(String identifier, String type, double[] location){
         this.identifier = identifier;
         this.kind = kind;
         this.location = location;
