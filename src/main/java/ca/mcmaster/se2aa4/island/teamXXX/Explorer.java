@@ -5,9 +5,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eu.ace_design.island.bot.IExplorerRaid;
+
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.json.JSONArray;
+import java.util.List;
 
 public class Explorer implements IExplorerRaid {
 
@@ -46,19 +48,36 @@ public class Explorer implements IExplorerRaid {
     @Override
     public void acknowledgeResults(String s) {
         JSONObject response = new JSONObject(new JSONTokener(new StringReader(s)));
-        
+        control.storeResponse(drone.getAction(), response);
         logger.info("** Response received:\n"+response.toString(2));
         Integer cost = response.getInt("cost");
+        drone.updateBatteryLevel(cost);
         logger.info("The cost of the action was {}", cost);
         String status = response.getString("status");
         logger.info("The status of the drone is {}", status);
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
+        checker.put("check", response.getJSONObject("extras"));
     }
 
     @Override
     public String deliverFinalReport() {
-        return "no creek found";
+        List<InterestPoints> creeks = map.creeks;
+        
+        InterestPoints site = map.site;
+        double distance = map.computeDistance();
+        if (map.closestCreek == null) {
+            map.closestCreek = creeks.get(0);
+        }
+        String report = map.closestCreek.getId();
+        logger.info("The location of the emergency site is {}", site.getX() + ", " + site.getY());
+        logger.info("** The distance between emergency site and closest creek is {}", distance);
+        logger.info("** The identifier of the closest creek is {}", map.closestCreek.getId());
+        logger.info("** The location of the closest creek is {}", map.closestCreek.getX() + ", " + map.closestCreek.getY());
+        logger.info("** Delivering the final report");
+        logger.info("** The drone has stopped");
+        
+        return report;
     }
     public static void main(String[] args) {
         Explorer e = new Explorer();

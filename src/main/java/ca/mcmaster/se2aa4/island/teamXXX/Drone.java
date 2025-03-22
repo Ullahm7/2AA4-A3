@@ -201,6 +201,11 @@ public class Drone {
         logger.info(currentLocation.getX() + " " + currentLocation.getY());
         return decisionTaken("heading", heading.toString());
     }
+    public Heading getDirection() {
+
+        return direction;
+
+    }
 
     public String echo(Heading heading) {
         return decisionTaken("echo", heading.toString());
@@ -220,6 +225,12 @@ public class Drone {
 
     public String getAction() {
         return action;
+    }
+    public void updateBatteryLevel(Integer cost) {
+        if (cost < 0) {
+            throw new IllegalArgumentException("Cost cannot be negative");
+        }
+        batteryLevel -= cost;
     }
 
     String decisionTaken(String command) {

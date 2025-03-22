@@ -12,21 +12,23 @@ import java.util.ArrayList;
 public class InterestPoints extends LocationPoint{
 
     private String identifier;
-    private String kind;
+    private String type;
     private double[] location; //contains x and y
+    
 
     public InterestPoints(int x, int y,String identifier, String type){
         super(x,y);
         this.identifier = identifier;
-        this.kind = kind;
+        this.type = type;
+        super.isPOI = true;
     }
 
     public String getId(){
-        return null;
+        return identifier;
     }
 
-    public String getKind(){
-        return null;
+    public String getType(){
+        return type;
     }
 
     public double[] getLocation(){
