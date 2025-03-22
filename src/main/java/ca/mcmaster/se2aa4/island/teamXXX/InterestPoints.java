@@ -9,16 +9,16 @@ import java.util.ArrayList;
         "y": 765.8454474411957
 */
 
-public class InterestPoints {
+public class InterestPoints extends LocationPoint{
 
     private String identifier;
     private String kind;
     private double[] location; //contains x and y
 
-    public InterestPoints(String identifier, String type, double[] location){
+    public InterestPoints(int x, int y,String identifier, String type){
+        super(x,y);
         this.identifier = identifier;
         this.kind = kind;
-        this.location = location;
     }
 
     public String getId(){
