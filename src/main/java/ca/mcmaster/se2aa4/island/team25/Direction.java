@@ -31,4 +31,18 @@ public enum Direction {
         return values()[(ordinal() + 3) % 4];
     }
 
+    public String getIcon() {
+        return this.icon+"";
+    }
+
+    public static Direction charToDir(char direction) {
+        for (Direction dir : values()) {
+            if (dir.icon == direction) {
+                return dir;
+            }
+        }
+        System.out.println("Invalid starting direction from JSON!");
+        System.exit(0);
+        return null;
+    }
 }
