@@ -35,5 +35,4 @@ public class Map {
             mainPoints.set(j + 1, key); // Insert key at correct position
         }
     }
-
 }
