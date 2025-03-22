@@ -14,9 +14,9 @@ public class InterestPoint implements Point {
     private final String identifier;
     private double x;
     private double y;
-    private final String type;
+    private final Kind type;
 
-    public InterestPoint(String identifier, double x, double y, String type) {
+    public InterestPoint(String identifier, double x, double y, Kind type) {
         this.identifier = identifier;
         this.x = x;
         this.y = y;

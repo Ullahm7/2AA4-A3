@@ -11,8 +11,9 @@ public class Map {
         mainPoints = new ArrayList<InterestPoint>();
     }
 
-    public void putPoint(InterestPoint point) {
-        if (point.getType() == "EmergencySite") {
+    public void putPoint(String id, int x, int y, Kind typeKind) {
+        InterestPoint point = new InterestPoint(id, x, y, typeKind)
+        if (point.getType() == Kind.EmergencySite) {
             mainPoints.add(0, point);
             eQuant++;
         } else {
@@ -20,7 +21,6 @@ public class Map {
         }
     }
 
-    @SuppressWarnings("unused")
     private void sortPoint() {
         int size = mainPoints.size();
         for (int i = eQuant; i < size; i++) {
@@ -34,6 +34,9 @@ public class Map {
             }
             mainPoints.set(j + 1, key); // Insert key at correct position
         }
+    }
+
+    private void report() {
     }
 
 }
