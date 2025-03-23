@@ -35,8 +35,7 @@ public class Locate implements Decisions {
 
     @Override
     public Decisions getStage() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStage'");
+        return new Turn(mapping);
     }
 
     @Override
