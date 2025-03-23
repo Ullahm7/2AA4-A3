@@ -2,11 +2,11 @@ package ca.mcmaster.se2aa4.island.team25;
 
 import java.util.ArrayList;
 
-public class Map {
+public class ListMap {
     private ArrayList<InterestPoint> mainPoints;
     private int eQuant = 0;
 
-    public Map() {
+    public ListMap() {
         // Initialize Arrya list of all points of intrest
         mainPoints = new ArrayList<InterestPoint>();
     }
@@ -21,7 +21,7 @@ public class Map {
         }
     }
 
-    private void sortPoint() {
+    public void sortPoint() {
         int size = mainPoints.size();
         for (int i = eQuant; i < size; i++) {
             InterestPoint key = mainPoints.get(i);
@@ -37,6 +37,14 @@ public class Map {
     }
 
     private void report() {
+    }
+
+    public InterestPoint returnEmergencyPoint() {
+        return mainPoints.get(0);
+    }
+
+    public InterestPoint returnCloseInterestPoint() {
+        return mainPoints.get(mainPoints.size() - 1);
     }
 
 }

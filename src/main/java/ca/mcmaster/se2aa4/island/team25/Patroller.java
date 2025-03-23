@@ -12,7 +12,7 @@ public class Patroller {
     Drone drone;
     SearchMethod currentSearch;
 
-    Patroller(Drone drone, Map map) {
+    Patroller(Drone drone, ListMap map) {
         this.drone = drone;
         this.currentSearch = new InitialSearch(drone);
     }
