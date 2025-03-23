@@ -50,7 +50,5 @@ public abstract class InterestPoints implements LocationPoint{
     @Override
     public abstract void storeScanResults(Storage scanResults);
     
-
-    
     
 }
