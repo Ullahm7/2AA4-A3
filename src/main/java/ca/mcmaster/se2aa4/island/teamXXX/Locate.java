@@ -25,5 +25,11 @@ public class Locate implements Decisions {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'isFinal'");
     }
+
+    @Override
+    public void processResponse(Storage responseStorage, Drone drone, MapRepresenter map) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'processResponse'");
+    }
     
 }

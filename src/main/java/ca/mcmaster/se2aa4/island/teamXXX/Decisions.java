@@ -8,4 +8,7 @@ public interface Decisions {
     Decisions getStage();
 
     Boolean isFinal();
+
+    void processResponse(Storage responseStorage, Drone drone, MapRepresenter map);
+
 }
