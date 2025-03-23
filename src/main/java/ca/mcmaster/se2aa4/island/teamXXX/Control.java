@@ -1,4 +1,5 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
+import ca.mcmaster.se2aa4.island.teamXXX.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,23 +18,14 @@ public class Control {
     Drone drone;
     MapRepresenter map;
 
-    Boolean initialEchoed = false;
-    Boolean gridSearch = false;
-    Boolean searchedCoast = false;
-    Boolean stop = false;
-
     Storage storage = new Storage();
-    Initializer initializer;
-    GridSearcher gridSearcher;
-    Mapping mapping;
     Decisions current;
+    Mapping mapping;
 
     Control(Drone drone, MapRepresenter map){
         this.drone = drone;
         this.map = map;
-        this.initializer = new Initializer(drone, map);
-        this.gridSearcher = new GridSearcher(drone, map);
-        this.mapping = new Mapping(map);
+        this.mapping = new Mapping(drone, map);
         this.current = new Echo(mapping);
     }
 
@@ -45,96 +37,35 @@ public class Control {
     */
     public String nextDecision() {
 
-        if (drone.getBatteryLevel() < 100){
+        logger.info("Battery Level: " + drone.getBatteryLevel());
+
+        if (drone.getBatteryLevel() < 50) {
             return drone.stop();
         }
 
-        //first echo to determine where the drone is located
-        if (initialEchoed == false) {
-            initialEchoed = true;
-            return drone.echo(this.drone.initialHeading);
+        if (storage.getCost() != null) {
+            if (drone.getAction().equals("scan")) {
+                map.storeScanResults(storage, drone.getCurrentLocation());
+            }
+            if (current instanceof ProcessDecisions) {
+                ((ProcessDecisions) current).processResponse(storage, drone, map);
+            }
         }
 
-        if (drone.getAction().equals("scan")) {
-            map.storeScanResults(storage, drone.currentLocation);
-        }
-
-        while (!current.isFinal()){
-            while (!current.isReached()){
-                current.processResponse(storage, drone, map);
-                String decision = current.nextDecision(storage, drone, map);
-                if (!(decision == null)){
+        while (!current.isFinal()) {
+            while (!current.isReached()) {
+                String decision = current.nextDecision( drone, map);
+                if (!(decision == null)) {
                     return decision;
                 }
-                /// handler.process(decision); questionable
             }
             this.current = current.getStage();
         }
-
-
-        //initializatoin and finding ground
-        if (map.initialized == false) {
-            return initializer.initializeMission(this.drone.initialHeading, storage);
-        }
-
-
-        if (map.initialized == true && gridSearch == false) {
-            return gridSearcher.searchGrid(storage);
-        }
-
-        logger.info("MAP INITIALIZED");
         return drone.stop();
     }
 
-    public void storeResponse(String action, JSONObject previousResponse){
-        // want to clear at the start of each iteration
-        storage.clear();
-
-        List<String> temp = new ArrayList<String>();
-        storage.setCost(previousResponse.getInt("cost"));
-
-        if (action.equals("echo")) {
-            storage.setRange(previousResponse.getJSONObject("extras").getInt("range"));
-            storage.setFound(previousResponse.getJSONObject("extras").getString("found"));
-        }
-
-        // store as lists with first item being null if empty
-        else if (action.equals("scan")) {
-            temp = new ArrayList<String>();
-            JSONArray creeksArray = previousResponse.getJSONObject("extras").getJSONArray("creeks");
-            if (creeksArray.length() == 0) {
-                temp.add("null");
-            } else {
-
-                for (int i = 0; i < creeksArray.length(); i++) {
-                    temp.add(creeksArray.getString(i));
-                }
-            }
-            storage.setCreeks(temp);
-
-            temp = new ArrayList<String>();
-            JSONArray biomesArray = previousResponse.getJSONObject("extras").getJSONArray("biomes");
-            if (biomesArray.length() == 0) {
-                temp.add("null");
-            } else {
-
-                for (int i = 0; i < biomesArray.length(); i++) {
-                    temp.add(biomesArray.getString(i));
-                }
-            }
-            storage.setBiomes(temp);
-
-            // assuming there is only one site, we only store the first value
-            temp = new ArrayList<String>();
-            JSONArray sitesArray = previousResponse.getJSONObject("extras").getJSONArray("sites");
-            if (sitesArray.length() == 0) {
-                temp.add("null");
-            } else {
-                temp.add(sitesArray.getString(0));
-            }
-            storage.setSite(temp.get(0));
-
-        }
+    public void storeResponse(String action, JSONObject previousResponse) {
+        storage.storeResponse(action, previousResponse);
     }    
 
     

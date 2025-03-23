@@ -1,8 +1,8 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 
-import eu.ace_design.island.game.actions.Scan;
+import ca.mcmaster.se2aa4.island.teamXXX.*;
 
-public class Find implements Decisions {
+public class Find implements ProcessDecisions {
     int counter = 0;
     int flyCounter = 0;
     boolean reachedEnd = false;
@@ -21,26 +21,8 @@ public class Find implements Decisions {
     }
 
     @Override
-    public String nextDecision(Storage responseStorage, Drone drone, MapRepresenter map) {
-
-        if (!foundDimension) {
-            if (counter == 0) {
-                counter++;
-                flyCounter++;
-                return drone.fly();
-            } else {
-                counter = 0;
-                return drone.echo(drone.getCurrentHeading());
-            }
-        } else {
-            reachedEnd = true;
-            return drone.scan();
-        }
-    }
-
-    @Override
     public Decisions getStage() {
-        return new Scan(new GridSearch(mapping.drone, mapping.map));
+        return new Scan(new Search(mapping.drone, mapping.map));
     }
 
     @Override
@@ -56,9 +38,28 @@ public class Find implements Decisions {
                 mapping.initializeMapDimensions(drone.getCurrentHeading().backSide(), flyCounter);
                 mapping.initializeRowsAndColumns();
                 map.initializeMap();
-                drone.initializeCurrentLocation(mapping.leftX, mapping.topY,mapping.spawnedFacingGround);
+                drone.initializeCurrentLocation(mapping.leftColumns, mapping.topRows,mapping.spawnedFacingGround);
                 foundDimension = true;
             }
+        }
+    }
+
+    @Override
+    public String nextDecision(Drone drone, MapRepresenter map) {
+        // Fly to opposite side of the island and then find the missing dimension, end
+        // by scanning the ground
+        if (!foundDimension) {
+            if (counter == 0) {
+                counter++;
+                flyCounter++;
+                return drone.fly();
+            } else {
+                counter = 0;
+                return drone.echo(drone.getCurrentHeading());
+            }
+        } else {
+            reachedEnd = true;
+            return drone.scan();
         }
     }
     

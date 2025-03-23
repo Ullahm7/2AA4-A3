@@ -5,43 +5,45 @@ import ca.mcmaster.se2aa4.island.teamXXX.*;
 
 
 public class Mapping {
-    private final Logger logger = LogManager.getLogger();
 
-    Integer topY;
-    Integer bottomY;
-    Integer leftX;
-    Integer rightX;
+    Integer topRows;
+    Integer bottomRows;
+    Integer leftColumns;
+    Integer rightColumns;
     Boolean facingGround;
+
     Heading directionToEcho;
+
     Boolean spawnedFacingGround = false;
 
     int distanceToGround = 0;
+
+    MapRepresenter map;
+    Drone drone;
 
     Boolean middle;
     Boolean echoed = false;
     Heading generalDirection;
     Integer outOfRangeCounter = 0;
 
-    MapRepresenter map;
-    Drone drone;
-
     public Mapping(Drone drone, MapRepresenter map) {
+        this.drone = drone;
         this.map = map;
     }
 
     public void initializeMapDimensions(Heading heading, Integer range) {
         switch (heading) {
             case N:
-                topY = range;
+                topRows = range;
                 break;
             case E:
-                rightX = range;
+                rightColumns = range;
                 break;
             case S:
-                bottomY = range;
+                bottomRows = range;
                 break;
             case W:
-                leftX = range;
+                leftColumns = range;
                 break;
             default:
                 break;
@@ -49,26 +51,26 @@ public class Mapping {
     }
     
     public void initializeRowsAndColumns() {
-        if (topY != null && bottomY != null && leftX != null && rightX != null) {
-            map.rows = topY + bottomY + 1;
-            map.columns = leftX + rightX + 1;
+        if (topRows != null && bottomRows != null && leftColumns != null && rightColumns != null) {
+            map.rows = topRows + bottomRows + 1;
+            map.columns = leftColumns + rightColumns + 1;
         }
     }
     public void directionToEcho(Heading currentHeading) {
         if (currentHeading == Heading.N || currentHeading == Heading.S) {
-            if (leftX > rightX) {
+            if (leftColumns > rightColumns) {
                 directionToEcho = Heading.W;
-            } else if (rightX > leftX) {
+            } else if (rightColumns > leftColumns) {
                 directionToEcho = Heading.E;
-            } else if (leftX == rightX) {
+            } else if (leftColumns == rightColumns) {
                 directionToEcho = Heading.E;
             }
         } else if (currentHeading == Heading.E || currentHeading == Heading.W) {
-            if (topY > bottomY) {
+            if (topRows > bottomRows) {
                 directionToEcho = Heading.N;
-            } else if (bottomY > topY) {
+            } else if (bottomRows > topRows) {
                 directionToEcho = Heading.S;
-            } else if (bottomY == topY) {
+            } else if (bottomRows == topRows) {
                 directionToEcho = Heading.N;
             }
         }

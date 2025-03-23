@@ -1,14 +1,11 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 import ca.mcmaster.se2aa4.island.teamXXX.*;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 
 public class MapRepresenter {
-    private final Logger logger = LogManager.getLogger();
     public Boolean initialized = false;
     //simple array list for pois that we are interested in
     private List<Creeks> creeks = new ArrayList<>();
@@ -74,16 +71,19 @@ public class MapRepresenter {
         map.clear();
 
         // initialize the map with the given dimensions
-        logger.info("Initializing map with dimensions: " + columns + "x" + rows);
-        for (int i = 0; i < columns; i++) {
+        for (int i = 0; i < rows; i++) {
             List<LocationPoint> row = new ArrayList<>();
-            for (int j = 0; j < rows; j++) {
+            for (int j = 0; j < columns; j++) {
                 Points point = new Points(i, j);
+                
+                // set the points on the edges as scanned
+                if (i <= 2 || j <= 2 || i >= rows - 3 || j >= columns - 3){
+                    point.setBeenScanned(true);
+                }
                 row.add(point);
             }
             map.add(row);
         }
-
     }
 
     private double computeMinDistance() {
@@ -103,7 +103,7 @@ public class MapRepresenter {
         return minDistance;
     }
 
-    public double distanceBetweenTwoPoints(Point point1, Point point2) {
+    public double distanceBetweenTwoPoints(LocationPoint point1, LocationPoint point2) {
         return Math.sqrt(Math.pow((point1.getRow() - point2.getRow()), 2)
                 + Math.pow((point1.getColumn() - point2.getColumn()), 2));
     }
@@ -122,6 +122,12 @@ public class MapRepresenter {
 
     public Double getClosestCreekDistance() {
         return closestCreekDistance;
+    }
+
+    public void updateClosestCreek() {
+        if (!creeks.isEmpty() && site != null) {
+            closestCreekDistance = this.computeMinDistance();
+        }
     }
 
     public void setAsScanned(Drone drone, int distance, Heading heading) {

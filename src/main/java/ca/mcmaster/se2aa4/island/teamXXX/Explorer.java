@@ -3,6 +3,7 @@ package ca.mcmaster.se2aa4.island.teamXXX;
 import java.io.StringReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ca.mcmaster.se2aa4.island.teamXXX.*;
 
 import eu.ace_design.island.bot.IExplorerRaid;
 
@@ -10,6 +11,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.json.JSONArray;
 import java.util.List;
+
 
 public class Explorer implements IExplorerRaid {
 
@@ -62,22 +64,25 @@ public class Explorer implements IExplorerRaid {
 
     @Override
     public String deliverFinalReport() {
-        List<InterestPoints> creeks = map.creeks;
-        
-        InterestPoints site = map.site;
-        double distance = map.computeDistance();
-        if (map.closestCreek == null) {
-            map.closestCreek = creeks.get(0);
+        List<Creeks> creeks = map.getCreeks();
+        Creeks closestCreek = map.getClosestCreek();
+        Sites site = map.getSite();
+
+        if (closestCreek == null && site == null) {
+            return "No creeks found";
         }
-        String report = map.closestCreek.getId();
-        logger.info("The location of the emergency site is {}", site.getX() + ", " + site.getY());
-        logger.info("** The distance between emergency site and closest creek is {}", distance);
-        logger.info("** The identifier of the closest creek is {}", map.closestCreek.getId());
-        logger.info("** The location of the closest creek is {}", map.closestCreek.getX() + ", " + map.closestCreek.getY());
-        logger.info("** Delivering the final report");
-        logger.info("** The drone has stopped");
-        
-        return report;
+        else if (site == null) {
+            logger.info("The closest creek is {}", closestCreek.getIdentifiers().get(0));
+            return closestCreek.getIdentifiers().get(0);
+        }
+        else if (closestCreek == null) {
+            return site.getIdentifier();
+        }
+        else{
+            logger.info("** The identifier of the closest creek is {}", closestCreek.getIdentifiers().get(0));
+            logger.info("** Delivering the final report");
+            return closestCreek.getIdentifiers().get(0);
+        }
     }
     public static void main(String[] args) {
         Explorer e = new Explorer();

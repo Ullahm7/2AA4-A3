@@ -21,7 +21,7 @@ public class Locate implements ProcessDecisions {
     }
 
     @Override
-    public String nextDecision(Storage responseStorage, Drone drone, MapRepresenter map) {
+    public String nextDecision(Drone drone, MapRepresenter map) {
         if (counter == 0) {
             counter++;
             return drone.fly();

@@ -3,6 +3,7 @@ package ca.mcmaster.se2aa4.island.teamXXX;
 import java.lang.reflect.AccessFlag.Location;
 import java.util.ArrayList;
 import java.util.List;
+import ca.mcmaster.se2aa4.island.teamXXX.Storage;
 
 /*looking at _pois.json we get info on this: 
  * "uid": "1f3f5c9f-8a64-4ab1-bd1a-c8fa705fec56",

@@ -1,16 +1,14 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
-
 import ca.mcmaster.se2aa4.island.teamXXX.*;
 
+public class NoScan implements Decisions {
 
-public class Fly implements Decisions {
-    int counter = 0;
-    boolean reachedEnd = false;
+    Boolean reachedEnd = false;
 
-    Mapping mapping;
+    Search search;
 
-    public Fly(Mapping mapping) {
-        this.mapping = mapping;
+    public NoScan(Search search) {
+        this.search = search;
     }
 
     @Override
@@ -20,25 +18,29 @@ public class Fly implements Decisions {
 
     @Override
     public String nextDecision(Drone drone, MapRepresenter map) {
-        if (mapping.distanceToGround == 1) {
+        if (search.distanceToFly == 0) {
             reachedEnd = true;
-            return drone.scan();
+            return null;
         } else {
-            mapping.distanceToGround--;
+            search.distanceToFly--;
             return drone.fly();
         }
     }
 
     @Override
     public Decisions getStage() {
-        return new Scan(new Search(mapping.drone, mapping.map));
+        if (search.translated){
+            search.translated = false;
+            return new TurnAround(search);
+        }
+        else{
+            return new Scan(search);
+        }
     }
 
     @Override
     public Boolean isFinal() {
         return false;
     }
-
-    
     
 }

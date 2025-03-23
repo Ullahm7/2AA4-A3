@@ -1,14 +1,10 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import ca.mcmaster.se2aa4.island.teamXXX.*;
 
-public class Echo implements Decisions {
-
-    private final Logger logger = LogManager.getLogger();
+public class Echo implements ProcessDecisions {
 
     int counter = 0;
     boolean reachedEnd = false;
-    int distanceToGround = 0;
     Mapping mapping;
 
     public Echo(Mapping mapping){
@@ -21,8 +17,7 @@ public class Echo implements Decisions {
     }
 
     @Override
-    public String nextDecision(Storage responseStorage, Drone drone, MapRepresenter map) {
-        logger.info(drone.getBatteryLevel());
+    public String nextDecision(Drone drone, MapRepresenter map) {
         if (counter == 0){
             counter++;
             return drone.echo(drone.initialHeading);
@@ -72,10 +67,11 @@ public class Echo implements Decisions {
                 mapping.initializeMapDimensions(drone.getCurrentHeading().backSide(), 0);
                 mapping.initializeRowsAndColumns();
                 map.initializeMap();
-                drone.initializeCurrentLocation(mapping.leftX, mapping.topY,mapping.spawnedFacingGround);
+                drone.initializeCurrentLocation(mapping.leftColumns, mapping.topRows,mapping.spawnedFacingGround);
                 mapping.directionToEcho(drone.getCurrentHeading());
             }
         }
     }
+
     
 }
