@@ -2,15 +2,20 @@ package ca.mcmaster.se2aa4.island.teamXXX;
 
 public class Sites extends InterestPoints {
 
-    public Sites(InterestPoints poi) {
+    private String identifier;
+
+    public Sites(LocationPoint poi) {
         super(poi);
-        //TODO Auto-generated constructor stub
+    }
+
+    public String getIdentifier() {
+        return identifier;
     }
 
     @Override
     public void storeScanResults(Storage scanResults) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'storeScanResults'");
+        poi.storeScanResults(scanResults);
+        this.identifier = scanResults.getSite();
     }
     
 }

@@ -1,5 +1,6 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 
+import java.lang.reflect.AccessFlag.Location;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +12,9 @@ import java.util.List;
 */
 
 public abstract class InterestPoints implements LocationPoint{
-    protected InterestPoints poi;
+    protected LocationPoint poi;
 
-    public InterestPoints(InterestPoints poi) {
+    public InterestPoints(LocationPoint poi) {
         this.poi = poi;
     }
 

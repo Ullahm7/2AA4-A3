@@ -1,16 +1,25 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Creeks extends InterestPoints {
 
-    public Creeks(InterestPoints poi) {
-            super(poi);
+    private List<String> identifiers = new ArrayList<String>();
 
-        }
+    public Creeks(LocationPoint poi) {
+            super(poi);
+    }
+    public List<String> getIdentifiers() {
+        return identifiers;
+    }
     
         @Override
     public void storeScanResults(Storage scanResults) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'storeScanResults'");
+        poi.storeScanResults(scanResults);
+        for (String creekIdentifier : scanResults.getCreeks()) {
+            identifiers.add(creekIdentifier);
+        }
     }
     
 }
