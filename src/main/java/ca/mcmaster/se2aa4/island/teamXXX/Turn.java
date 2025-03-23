@@ -2,6 +2,10 @@ package ca.mcmaster.se2aa4.island.teamXXX;
 
 public class Turn implements Decisions {
 
+    public Turn(Mapping mapping) {
+        //TODO Auto-generated constructor stub
+    }
+
     @Override
     public Boolean isReached() {
         // TODO Auto-generated method stub

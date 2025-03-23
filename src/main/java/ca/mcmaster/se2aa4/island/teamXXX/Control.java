@@ -45,7 +45,7 @@ public class Control {
     */
     public String nextDecision() {
 
-        if (drone.getBatteryLevel() < 50){
+        if (drone.getBatteryLevel() < 100){
             return drone.stop();
         }
 

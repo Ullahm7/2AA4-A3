@@ -14,6 +14,8 @@ public class Mapping {
     Heading directionToEcho;
     Boolean spawnedFacingGround = false;
 
+    int distanceToGround = 0;
+
     Boolean middle;
     Boolean echoed = false;
     Heading generalDirection;
