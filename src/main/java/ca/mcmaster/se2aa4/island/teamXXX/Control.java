@@ -26,12 +26,16 @@ public class Control {
     Storage storage = new Storage();
     Initializer initializer;
     GridSearcher gridSearcher;
+    Mapping mapping;
+    Decisions current;
 
     Control(Drone drone, MapRepresenter map){
         this.drone = drone;
         this.map = map;
         this.initializer = new Initializer(drone, map);
         this.gridSearcher = new GridSearcher(drone, map);
+        this.mapping = new Mapping(map);
+        this.current = new Echo(mapping);
     }
 
     /*this method is where everything happens for this rescue mission. Interface between our objects and classes, and the explorer class
@@ -55,6 +59,19 @@ public class Control {
         if (drone.getAction().equals("scan")) {
             map.storeScanResults(storage, drone.currentLocation);
         }
+
+        while (!current.isFinal()){
+            while (!current.isReached()){
+                current.processResponse(storage, drone, map);
+                String decision = current.nextDecision(storage, drone, map);
+                if (!(decision == null)){
+                    return decision;
+                }
+                /// handler.process(decision); questionable
+            }
+            this.current = current.getStage();
+        }
+
 
         //initializatoin and finding ground
         if (map.initialized == false) {

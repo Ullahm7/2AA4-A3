@@ -1,6 +1,12 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 
-public class Fly implements Decisions {
+public class Find implements Decisions {
+    int distanceToGround;
+    Mapping mapping;
+    public Find(int distanceToGround, Mapping mapping){
+        this.distanceToGround = distanceToGround;
+        this.mapping = mapping;
+    }
 
     @Override
     public Boolean isReached() {

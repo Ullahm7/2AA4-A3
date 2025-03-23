@@ -1,6 +1,6 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 
-public class Fly implements Decisions {
+public class NotFind implements Decisions {
 
     @Override
     public Boolean isReached() {

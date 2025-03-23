@@ -9,7 +9,7 @@ public class Locate implements Decisions {
     }
 
     @Override
-    public String nextDecision() {
+    public String nextDecision(Storage responseStorage, Drone drone, MapRepresenter map) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'nextDecision'");
     }
