@@ -1,35 +1,45 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 
-public class Fly implements Decisions {
+import ca.mcmaster.se2aa4.island.teamXXX.*;
+import eu.ace_design.island.game.actions.Scan;
 
-    @Override
-    public Boolean isReached() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isReached'");
+
+public class Fly implements Decisions {
+    int counter = 0;
+    boolean reachedEnd = false;
+
+    Mapping mapping;
+
+    public Fly(Mapping mapping) {
+        this.mapping = mapping;
     }
 
     @Override
-    public String nextDecision(Storage responseStorage, Drone drone, MapRepresenter map) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'nextDecision'");
+    public Boolean isReached() {
+        return reachedEnd;
+    }
+
+    @Override
+    public String nextDecision(Drone drone, MapRepresenter map) {
+        if (mapping.distanceToGround == 1) {
+            reachedEnd = true;
+            return drone.scan();
+        } else {
+            mapping.distanceToGround--;
+            return drone.fly();
+        }
     }
 
     @Override
     public Decisions getStage() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStage'");
+        return new Scan(new GridSearch(mapping.drone, mapping.map));
     }
 
     @Override
     public Boolean isFinal() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isFinal'");
+        return false;
     }
 
-    @Override
-    public void processResponse(Storage responseStorage, Drone drone, MapRepresenter map) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'processResponse'");
-    }
+    
     
 }

@@ -1,6 +1,6 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 
-public class Locate implements Decisions {
+public class Locate implements ProcessDecisions {
 
     Boolean flyCheck = true;
     Boolean foundLand = false;

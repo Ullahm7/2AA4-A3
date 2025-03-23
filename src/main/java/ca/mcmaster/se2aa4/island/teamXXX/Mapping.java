@@ -1,7 +1,8 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ca.mcmaster.se2aa4.island.teamXXX.Drone.Heading;
+import ca.mcmaster.se2aa4.island.teamXXX.*;
+
 
 public class Mapping {
     private final Logger logger = LogManager.getLogger();
