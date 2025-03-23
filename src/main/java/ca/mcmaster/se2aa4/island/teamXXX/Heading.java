@@ -21,7 +21,6 @@ public enum Heading {
         }
     }
 
-    
     public Heading rightSide() {
         switch (this) {
             case N:
@@ -37,7 +36,6 @@ public enum Heading {
         }
     }
 
-    
     public Heading backSide() {
         switch (this) {
             case N:

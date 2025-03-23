@@ -21,8 +21,7 @@ public class Control {
     Boolean gridSearch = false;
     Boolean searchedCoast = false;
     Boolean stop = false;
-    //List<String> nextDecision = new ArrayList<String>();
-    //HashMap<String, List<String>> responseStorage = new HashMap<String, List<String>>();
+
     Storage storage = new Storage();
     Initializer initializer;
     GridSearcher gridSearcher;
