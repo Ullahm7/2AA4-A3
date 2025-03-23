@@ -8,13 +8,13 @@ public class Echo implements Decisions {
 
     int counter = 0;
     boolean reachedEnd = false;
-    boolean spawnedFacingGround = false;
     int distanceToGround = 0;
-
     Mapping mapping;
+
     public Echo(Mapping mapping){
         this.mapping = mapping;
     } 
+
     @Override
     public Boolean isReached() {
         return reachedEnd;
@@ -25,16 +25,18 @@ public class Echo implements Decisions {
         logger.info(drone.getBatteryLevel());
         if (counter == 0){
             counter++;
-            return drone.echo(drone.initialHeading.rightSide(drone.initialHeading));
+            return drone.echo(drone.initialHeading);
         }
         else if (counter == 1){
             counter++;
-            return drone.echo(drone.initialHeading.leftSide(drone.initialHeading));
+            return drone.echo(drone.initialHeading.rightSide());
         }
-        else{
-            return drone.stop();
-            // reachedEnd = true;
-            // return null;
+        else if (counter == 2){
+            counter++;
+            reachedEnd = true;
+            return drone.echo(drone.initialHeading.leftSide());
+        }else{
+            return null;
         }
     }
 
@@ -43,11 +45,11 @@ public class Echo implements Decisions {
          // want to know if we are found land or not
         // if we have found land, we want to go to the FindMissingDimension phase
         // else we go to the checkbehinddirection phase
-        if (spawnedFacingGround){
-            return new Find(distanceToGround, mapping);
+        if (mapping.spawnedFacingGround){
+            return new Find(mapping);
         }
         else{
-            return new NotFind();
+            return new Locate(mapping);
         }
     }
 
@@ -59,13 +61,19 @@ public class Echo implements Decisions {
     @Override
     public void processResponse(Storage responseStorage, Drone drone, MapRepresenter map) {
         // we want to process the response from the echo
-        if (!(responseStorage.getCost() == null)){
+        if (!(responseStorage.getCost() == null)) {
             if (responseStorage.getFound().equals("OUT_OF_RANGE")) {
                 mapping.initializeMapDimensions(drone.getDirection(), responseStorage.getRange());
-
             } else {
-                distanceToGround = responseStorage.getRange();
-                spawnedFacingGround = true;
+                mapping.distanceToGround = responseStorage.getRange();
+                mapping.spawnedFacingGround = true;
+            }
+            if (reachedEnd && !mapping.spawnedFacingGround) {
+                mapping.initializeMapDimensions(drone.getCurrentHeading().backSide(), 0);
+                mapping.initializeRowsAndColumns();
+                map.initializeMap();
+                drone.initializeCurrentLocation(mapping.leftX, mapping.topY,mapping.spawnedFacingGround);
+                mapping.directionToEcho(drone.getCurrentHeading());
             }
         }
     }
