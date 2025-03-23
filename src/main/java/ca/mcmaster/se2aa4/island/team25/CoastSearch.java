@@ -14,11 +14,14 @@ public class CoastSearch implements SearchMethod {
         this.drone = drone;
     }
     public JSONObject nextStep() {
-        return this.drone.simpleAction(Action.FLY);
+        return this.drone.simpleAction(Action.STOP);
     }
 
     public void giveInfo(JSONObject info) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public SearchMethod searchType() {
+        return this;
     }
 
 }
