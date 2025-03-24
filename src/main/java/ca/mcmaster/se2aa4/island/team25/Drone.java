@@ -10,14 +10,14 @@ public class Drone {
 
     private Direction direction;
     private Battery battery;
+    private Coordinate currentCord;
 
     private int turnCounter = -1;
     private int perfectTurn = -1;
 
-    private Coordinate currentCord;
 
     public Drone(int battery, char heading) {
-        this.currentCord = new Coordinate(0,0);
+        this.currentCord = new Coordinate(0, 0);
         this.direction = Direction.charToDir(heading);
         this.battery = new Battery(battery);
 
@@ -25,8 +25,8 @@ public class Drone {
 
     public boolean goHome() {
         int currentBatt = this.battery.currentBattery();
-        int batteryToHome = ((this.currentCord.getX() + this.currentCord.getY())*4);
-        return (currentBatt < batteryToHome); 
+        int batteryToHome = ((this.currentCord.getX() + this.currentCord.getY()) * 4);
+        return (currentBatt < batteryToHome);
     }
 
     public boolean mustStop() {
@@ -82,16 +82,29 @@ public class Drone {
     //Happens once the Drone has reached the end of the every-other-row system
     public JSONObject perfectUTurn(int step) {
         switch (step) {
-            case(1): return this.turnRight();
-            case(2): return this.turnRight();
-            case(3): return this.turnRight();
-            case(4): return this.simpleAction(Action.FLY);
-            case(5): 
-            this.turnCounter+=2;
-            return this.turnRight();
-            default: return this.simpleAction(Action.STOP);
+            case (1):
+                return this.turnRight();
+            case (2):
+                return this.turnRight();
+            case (3):
+                return this.turnRight();
+            case (4):
+                return this.simpleAction(Action.FLY);
+            case (5):
+                this.turnCounter += 2;
+                return this.turnRight();
+            default:
+                return this.simpleAction(Action.STOP);
         }
 
+    }
+
+    public int getX() {
+        return this.currentCord.getX();
+    }
+
+    public int getY() {
+        return this.currentCord.getY();
     }
 
     public JSONObject simpleAction(Action type) {

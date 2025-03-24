@@ -8,5 +8,4 @@ public interface SearchMethod {
     void giveInfo(JSONObject info);
     SearchMethod searchType();
 
-
 }

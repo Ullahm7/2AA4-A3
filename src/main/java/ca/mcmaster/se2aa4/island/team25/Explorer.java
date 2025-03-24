@@ -37,7 +37,7 @@ public class Explorer implements IExplorerRaid {
     public String takeDecision() {
 
         String decision = patroller.nextAction();
-        logger.info("** Decision: {}", decision);
+        logger.info("** Decision: {}\n", decision);
         return decision;
     }
 
@@ -47,9 +47,9 @@ public class Explorer implements IExplorerRaid {
 
         Integer cost = response.getInt("cost");
         String status = response.getString("status");
-        logger.info("** Cost was: " + cost + " | Drone is "+ status);
+        //logger.info("** Cost was: " + cost + " | Drone is "+ status);
         JSONObject extraInfo = response.getJSONObject("extras");
-        logger.info("Additional information received: {} \n", extraInfo);
+        //logger.info("Additional information received: {} \n", extraInfo);
         patroller.readAction(response, extraInfo);
     }
 

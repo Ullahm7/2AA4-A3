@@ -76,9 +76,8 @@ public class GridSearch implements SearchMethod {
     public SearchMethod searchType() {
         if (!this.isDone && !drone.goHome()) {
             return this;
-            
-        }
-        else {
+
+        } else {
             return new FindHome(this.drone);
         }
     }

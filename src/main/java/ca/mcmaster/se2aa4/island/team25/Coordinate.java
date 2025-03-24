@@ -25,7 +25,7 @@ public class Coordinate {
     public void changeCord(Direction dir) {
         this.x += dir.changeX;
         this.y += dir.changeY;
-        logger.info(" || Drone is currently at [X:" + this.x + ", Y: "+this.y+"]");
+        //logger.info(" || Drone is currently at [X:" + this.x + ", Y: "+this.y+"]");
     }
 
 }

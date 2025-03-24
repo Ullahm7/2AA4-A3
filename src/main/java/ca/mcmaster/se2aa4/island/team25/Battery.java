@@ -22,7 +22,7 @@ public class Battery {
 
     public void lowerBattery(int usage) {
         this.battery -= usage;
-        logger.info("  || Current battery: " + this.battery);
+        //logger.info("  || Current battery: " + this.battery);
     }
 
 
