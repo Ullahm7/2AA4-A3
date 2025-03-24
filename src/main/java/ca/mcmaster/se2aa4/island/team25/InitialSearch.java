@@ -45,7 +45,7 @@ public class InitialSearch implements SearchMethod {
         if (info.has("found")) {
             if ("GROUND".equals(info.getString("found"))) {
                 this.landFound = true;
-                this.distToIsland = info.getInt("range") + stepNum + 1;
+                this.distToIsland = info.getInt("range") + stepNum - 2;
             }
         }
     }

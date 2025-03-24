@@ -9,6 +9,7 @@ public class Drone {
     private Coordinate cords;
 
     private int turnCounter = -1;
+    private int perfectTurn = -1;
 
     public Drone(int battery, char heading) {
 
@@ -17,36 +18,29 @@ public class Drone {
 
     }
 
-    public JSONObject radarDirection(Direction dir) {
+    public JSONObject createDirectionAction(String actionType, Direction dir) {
         JSONObject action = new JSONObject();
-        JSONObject extra = new JSONObject();
-        action.put("action", "echo");
-        extra.put("direction", dir.getIcon());
-        action.put("parameters", extra);
+        JSONObject parameters = new JSONObject();
+
+        action.put("action", actionType);
+        parameters.put("direction", dir.getIcon());
+        action.put("parameters", parameters);
 
         return action;
+    }
+
+    public JSONObject radarDirection(Direction dir) {
+        return createDirectionAction("echo", dir);
     }
 
     public JSONObject turnLeft() {
-        JSONObject action = new JSONObject();
-        JSONObject extra = new JSONObject();
-        action.put("action", "heading");
-        extra.put("direction", this.direction.turnLeft().getIcon());
-        action.put("parameters", extra);
-
         this.direction = this.direction.turnLeft();
-        return action;
+        return createDirectionAction("heading", this.direction);
     }
 
     public JSONObject turnRight() {
-        JSONObject action = new JSONObject();
-        JSONObject extra = new JSONObject();
-        action.put("action", "heading");
-        extra.put("direction", this.direction.turnRight().getIcon());
-        action.put("parameters", extra);
-
         this.direction = this.direction.turnRight();
-        return action;
+        return createDirectionAction("heading", this.direction);
     }
 
     public JSONObject uTurn() {
@@ -56,6 +50,21 @@ public class Drone {
         } else {
             return this.turnRight();
         }
+    }
+
+    //Happens once the Drone has reached the end of the every-other-row system
+    public JSONObject perfectUTurn(int step) {
+        switch (step) {
+            case(1): return this.turnRight();
+            case(2): return this.turnRight();
+            case(3): return this.turnRight();
+            case(4): return this.simpleAction(Action.FLY);
+            case(5): 
+            this.turnCounter+=2;
+            return this.turnRight();
+            default: return this.simpleAction(Action.STOP);
+        }
+
     }
 
     public JSONObject simpleAction(Action type) {
