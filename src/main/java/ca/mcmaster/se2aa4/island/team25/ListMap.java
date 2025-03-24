@@ -2,9 +2,15 @@ package ca.mcmaster.se2aa4.island.team25;
 
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
+
 public class ListMap {
     private ArrayList<InterestPoint> mainPoints;
     private int eQuant = 0;
+
+    private final Logger logger = LogManager.getLogger();
 
     public ListMap() {
         // Initialize Arrya list of all points of intrest
@@ -48,17 +54,17 @@ public class ListMap {
     }
 
     public void printEmergency() {
-        System.out.println("ID: " + mainPoints.get(0).returnID());
-        System.out.println("X: " + mainPoints.get(0).getX());
-        System.out.println("Y: " + mainPoints.get(0).getY());
+        logger.info("ID: " + mainPoints.get(0).returnID());
+        logger.info("X: " + mainPoints.get(0).getX());
+        logger.info("Y: " + mainPoints.get(0).getY());
     }
 
     public void printCreeks() {
         for (int i = 1; i < mainPoints.size(); i++) {
-            System.out.println("ID: " + mainPoints.get(i).returnID());
-            System.out.println("X: " + mainPoints.get(i).getX());
-            System.out.println("Y: " + mainPoints.get(i).getY());
-            System.out.println();
+            logger.info("ID: " + mainPoints.get(i).returnID());
+            logger.info("X: " + mainPoints.get(i).getX());
+            logger.info("Y: " + mainPoints.get(i).getY());
+            logger.info(" ");
         }
     }
 
