@@ -18,6 +18,7 @@ public class Patroller {
     }
 
     public String nextAction() {
+        this.currentSearch = currentSearch.searchType();
         JSONObject action = new JSONObject();
         action = currentSearch.nextStep();
         return action.toString();

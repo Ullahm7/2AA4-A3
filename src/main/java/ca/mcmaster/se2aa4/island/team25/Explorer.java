@@ -25,7 +25,7 @@ public class Explorer implements IExplorerRaid {
         String direction = info.getString("heading");
         Integer batteryLevel = info.getInt("budget");
 
-        Map map = new Map();
+        ListMap map = new ListMap();
         Drone drone = new Drone(batteryLevel, direction.charAt(0));
         this.patroller = new Patroller(drone, map);
 

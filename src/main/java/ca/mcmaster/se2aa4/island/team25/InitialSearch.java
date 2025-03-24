@@ -14,6 +14,8 @@ public class InitialSearch implements SearchMethod {
     private int distToIsland = 0;
     private boolean turnToLand = false;
 
+    private boolean searchDone = false;
+
     public InitialSearch(Drone drone) {
         this.drone = drone;
     }
@@ -33,13 +35,10 @@ public class InitialSearch implements SearchMethod {
             } else {
                 return this.drone.simpleAction(Action.FLY);
             }
-        } else if (stepNum == distToIsland+1) {
+        } else {
+            this.searchDone = true;
             return this.drone.simpleAction(Action.SCAN);
-        } 
-        else {
-            return this.drone.simpleAction(Action.STOP);
         }
-
     }
 
     public void giveInfo(JSONObject info) {
@@ -48,6 +47,14 @@ public class InitialSearch implements SearchMethod {
                 this.landFound = true;
                 this.distToIsland = info.getInt("range") + stepNum + 1;
             }
+        }
+    }
+
+    public SearchMethod searchType() {
+        if (this.searchDone) {
+            return new CoastSearch(this.drone);
+        } else {
+            return this;
         }
     }
 }
