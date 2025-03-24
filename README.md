@@ -4,7 +4,7 @@
 
 This product is an _exploration command center_ for the [Island](https://ace-design.github.io/island/) serious game. 
 
-- The `ca.mcmaster.se2aa4.island.team_XXX_.Explorer` class implements the command center, used to compete with the others. (You can replace `teamXXX` with your team's name if you'd like to.)
+- The `ca.mcmaster.se2aa4.island.team_XXX_.Explorer` class implements the command center, used to compete with the others. (You can replace `team25` with your team's name if you'd like to.)
 - The `Runner` class allows one to run the command center on a specific map.
 
 ### Strategy description
