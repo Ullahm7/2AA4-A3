@@ -18,7 +18,9 @@ public class Patroller {
     }
 
     public String nextAction() {
+        logger.info("Picking search type |||");
         this.currentSearch = currentSearch.searchType();
+        logger.info("Doing next step |||");
         JSONObject action = new JSONObject();
         action = currentSearch.nextStep();
         return action.toString();

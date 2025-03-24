@@ -18,6 +18,8 @@ public class GridSearch implements SearchMethod {
     private int checkAhead = 0;
     private int perfectTurn = 0;
 
+    private boolean isDone = false;
+
     public GridSearch(Drone drone) {
         this.drone = drone;
     }
@@ -32,13 +34,13 @@ public class GridSearch implements SearchMethod {
             }
 
             if (!this.landAhead) {
-                logger.info("\n\n END {} \n\n", this.perfectTurn+1);
                 this.perfectTurn += 1;
-            
+
                 if (this.perfectTurn < 6) {
                     return this.drone.perfectUTurn(this.perfectTurn);
                 } else {
-                    return this.drone.simpleAction(Action.STOP);
+                    this.isDone = true;
+                    return this.drone.simpleAction(Action.SCAN);
                 }
             }
 
@@ -62,7 +64,9 @@ public class GridSearch implements SearchMethod {
             this.landAhead = true;
             this.turning = 0;
             this.checkAhead = 1;
-            if (this.perfectTurn == 5) { this.perfectTurn++;}
+            if (this.perfectTurn == 5) {
+                this.perfectTurn++;
+            }
         }
         if (info.has("found")) {
             this.landAhead = "GROUND".equals(info.getString("found"));
@@ -70,7 +74,13 @@ public class GridSearch implements SearchMethod {
     }
 
     public SearchMethod searchType() {
-        return this;
+        if (!this.isDone && !drone.goHome()) {
+            return this;
+            
+        }
+        else {
+            return new FindHome(this.drone);
+        }
     }
 
 }

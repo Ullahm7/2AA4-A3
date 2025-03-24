@@ -47,7 +47,7 @@ public class Explorer implements IExplorerRaid {
 
         Integer cost = response.getInt("cost");
         String status = response.getString("status");
-        logger.info("** Response received:\n" + response.toString() + "cost was: " + cost + " | Drone is "+ status);
+        logger.info("** Cost was: " + cost + " | Drone is "+ status);
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {} \n", extraInfo);
         patroller.readAction(response, extraInfo);
