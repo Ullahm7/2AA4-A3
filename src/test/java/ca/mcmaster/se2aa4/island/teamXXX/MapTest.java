@@ -33,9 +33,9 @@ public class MapTest {
     public void testSorting() {
         MapTest.putPoint("1", 20, 22, Kind.Creek);
         MapTest.putPoint("2", 30, 42, Kind.Creek);
-        MapTest.putPoint("4", 48, 32, Kind.Creek);
+        MapTest.putPoint("5", 48, 31, Kind.Creek);
         MapTest.putPoint("3", 25, 32, Kind.EmergencySite);
-        MapTest.putPoint("5", 26, 30, Kind.Creek);
+        MapTest.putPoint("4", 26, 30, Kind.Creek);
         MapTest.sortPoint();
         assertEquals("4", MapTest.returnCloseInterestPoint().returnID());
     }

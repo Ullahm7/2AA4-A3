@@ -13,6 +13,7 @@ public class CoastSearch implements SearchMethod {
     public CoastSearch(Drone drone) {
         this.drone = drone;
     }
+
     public JSONObject nextStep() {
         return this.drone.simpleAction(Action.FLY);
     }
