@@ -54,17 +54,21 @@ public class ListMap {
     }
 
     public void printEmergency() {
-        logger.info("ID: " + mainPoints.get(0).returnID());
-        logger.info("X: " + mainPoints.get(0).getX());
-        logger.info("Y: " + mainPoints.get(0).getY());
+        if (mainPoints.size() != 0) {
+            logger.info("ID: " + mainPoints.get(0).returnID());
+            logger.info("X: " + mainPoints.get(0).getX());
+            logger.info("Y: " + mainPoints.get(0).getY());
+        }
     }
 
     public void printCreeks() {
-        for (int i = 1; i < mainPoints.size(); i++) {
-            logger.info("ID: " + mainPoints.get(i).returnID());
-            logger.info("X: " + mainPoints.get(i).getX());
-            logger.info("Y: " + mainPoints.get(i).getY());
-            logger.info(" ");
+        if (mainPoints.size() != 0) {
+            for (int i = 1; i < mainPoints.size(); i++) {
+                logger.info("ID: " + mainPoints.get(i).returnID());
+                logger.info("X: " + mainPoints.get(i).getX());
+                logger.info("Y: " + mainPoints.get(i).getY());
+                logger.info(" ");
+            }
         }
     }
 
