@@ -1,7 +1,6 @@
 package ca.mcmaster.se2aa4.island.team25;
 
 import java.io.StringReader;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,29 +9,25 @@ import org.json.JSONTokener;
 
 import eu.ace_design.island.bot.IExplorerRaid;
 
-
 public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
 
-    private JSONObject checker = new JSONObject(); // to store values to check for iteration
-
-    Drone drone;
-    MapRepresenter map;
-    Control control;
+    private Patroller patroller;
 
     @Override
     public void initialize(String s) {
+
         logger.info("** Initializing the Exploration Command Center");
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
-        logger.info("** Initialization info:\n {}",info.toString(2));
+        logger.info("** Initialization info:\n {}", info.toString(2));
 
         String direction = info.getString("heading");
         Integer batteryLevel = info.getInt("budget");
 
-        map = new MapRepresenter();
-        drone = new Drone(batteryLevel, direction, map);
-        control = new Control(drone, map);
+        ListMap map = new ListMap();
+        Drone drone = new Drone(batteryLevel, direction.charAt(0));
+        this.patroller = new Patroller(drone, map);
 
         logger.info("The drone is facing {}", direction);
         logger.info("Battery level is {}", batteryLevel);
@@ -40,46 +35,29 @@ public class Explorer implements IExplorerRaid {
 
     @Override
     public String takeDecision() {
-        String decision = control.nextDecision();
-        logger.info("** Decision: {}",decision.toString());
-        return decision.toString();
+
+        String decision = patroller.nextAction();
+        logger.info("** Decision: {}", decision);
+        return decision;
     }
 
     @Override
     public void acknowledgeResults(String s) {
         JSONObject response = new JSONObject(new JSONTokener(new StringReader(s)));
-        control.storeResponse(drone.getAction(), response);
-        logger.info("** Response received:\n"+response.toString(2));
+
+        logger.info("** Response received:\n" + response.toString(2));
         Integer cost = response.getInt("cost");
-        drone.updateBatteryLevel(cost);
         logger.info("The cost of the action was {}", cost);
         String status = response.getString("status");
         logger.info("The status of the drone is {}", status);
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
-        checker.put("check", response.getJSONObject("extras"));
+        patroller.readAction(response, extraInfo);
     }
 
     @Override
     public String deliverFinalReport() {
-        List<Creeks> creeks = map.getCreeks();
-        Creeks closestCreek = map.getClosestCreek();
-        Sites site = map.getSite();
-
-        if (closestCreek == null && site == null) {
-            return "No creeks found";
-        }
-        else if (site == null) {
-            logger.info("The closest creek is {}", closestCreek.getIdentifiers().get(0));
-            return closestCreek.getIdentifiers().get(0);
-        }
-        else if (closestCreek == null) {
-            return site.getIdentifier();
-        }
-        else{
-            logger.info("** The identifier of the closest creek is {}", closestCreek.getIdentifiers().get(0));
-            logger.info("** Delivering the final report");
-            return closestCreek.getIdentifiers().get(0);
-        }
+        return "no creek found";
     }
+
 }

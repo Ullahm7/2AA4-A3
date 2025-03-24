@@ -1,222 +1,75 @@
 package ca.mcmaster.se2aa4.island.team25;
 
-import ca.mcmaster.se2aa4.island.team25.Heading;
-
+import org.json.JSONObject;
 
 public class Drone {
 
-    //variable declaration
-    private Integer batteryLevel;
-    Heading direction;
-    LocationPoint currentLocation;
-    Heading currentHeading;
-    Heading initialHeading;
-    public MapRepresenter mapRepresenter;
-    Boolean spawnedFacingGround = false;
-    //decision making variables:
-    String action;
+    private Direction direction;
+    private Battery battery;
+    private Coordinate cords;
 
-    //drone contructor, will implement the mapping soon
-    public Drone(Integer batteryLevel, String initialHeading, MapRepresenter mapRepresenter) {
-        this.batteryLevel = batteryLevel;
-        this.currentHeading = Heading.valueOf(initialHeading);
-        this.initialHeading = Heading.valueOf(initialHeading);
-        this.currentLocation = new Points(100, 100); 
-        this.mapRepresenter = mapRepresenter;
+    private int turnCounter = -1;
+
+    public Drone(int battery, char heading) {
+
+        this.direction = Direction.charToDir(heading);
+        this.battery = new Battery(battery);
+
     }
 
-    //updates current location by one coord, the fly method continues to go in that direction, flys forward
-    public String fly() {
-        try {
-            switch (currentHeading) {
-                case N:
-                    currentLocation = mapRepresenter.map.get(currentLocation.getRow() - 1).get(currentLocation.getColumn());
-                    break;
-                case E:
-                    currentLocation = mapRepresenter.map.get(currentLocation.getRow()).get(currentLocation.getColumn() + 1);
-                    break;
-                case S:
-                    currentLocation = mapRepresenter.map.get(currentLocation.getRow() + 1).get(currentLocation.getColumn());
-                    break;
-                case W:
-                    currentLocation = mapRepresenter.map.get(currentLocation.getRow()).get(currentLocation.getColumn() - 1);
-                    break;
-                default:
-                    break;
-            }
-        } catch (IndexOutOfBoundsException e) {
-            return decisionTaken("stop");
-        }
-        return decisionTaken("fly");
-    }
+    public JSONObject radarDirection(Direction dir) {
+        JSONObject action = new JSONObject();
+        JSONObject extra = new JSONObject();
+        action.put("action", "echo");
+        extra.put("direction", dir.getIcon());
+        action.put("parameters", extra);
 
-    //this updates currentHeading and allows for the next heading to be a specific turn 
-    public void initializeCurrentLocation(Integer leftColumns, Integer topRows, Boolean spawnedFacingGround) {
-        int rows;
-        int columns;
-        this.spawnedFacingGround = spawnedFacingGround;
-
-        // we didnt change heading and so leftX and topY are the same as the current
-        // location
-        if (spawnedFacingGround) {
-            rows = topRows;
-            columns = leftColumns;
-        }
-        // since we changed heading, leftX and topY are off by a bit, the 100 we
-        // intialized currentLocation at (100, 100)
-        else {
-            rows = topRows + currentLocation.getRow() - 100;
-            columns = leftColumns + currentLocation.getColumn() - 100;
-        }
-
-        currentLocation = mapRepresenter.map.get(rows).get(columns);
-    }
-
-    // this method also updates current location based on current heading and next
-    // heading
-    public String heading(Heading heading) {
-        if (heading == currentHeading || heading == currentHeading.backSide()) {
-            throw new IllegalArgumentException("Invalid heading");
-        }
-        try {
-            if (heading == currentHeading.leftSide()) {
-                switch (currentHeading) {
-                    case N:
-                        currentLocation = mapRepresenter.map.get(currentLocation.getRow() - 1)
-                                .get(currentLocation.getColumn() - 1);
-                        break;
-                    case E:
-                        currentLocation = mapRepresenter.map.get(currentLocation.getRow() - 1)
-                                .get(currentLocation.getColumn() + 1);
-                        break;
-                    case S:
-                        currentLocation = mapRepresenter.map.get(currentLocation.getRow() + 1)
-                                .get(currentLocation.getColumn() + 1);
-                        break;
-                    case W:
-                        currentLocation = mapRepresenter.map.get(currentLocation.getRow() + 1)
-                                .get(currentLocation.getColumn() - 1);
-                        break;
-                    default:
-                        return null;
-                }
-            }
-
-            if (heading == currentHeading.rightSide()) {
-                switch (currentHeading) {
-                    case N:
-                        currentLocation = mapRepresenter.map.get(currentLocation.getRow() - 1)
-                                .get(currentLocation.getColumn() + 1);
-                        break;
-                    case E:
-                        currentLocation = mapRepresenter.map.get(currentLocation.getRow() + 1)
-                                .get(currentLocation.getColumn() + 1);
-                        break;
-                    case S:
-                        currentLocation = mapRepresenter.map.get(currentLocation.getRow() + 1)
-                                .get(currentLocation.getColumn() - 1);
-                        break;
-                    case W:
-                        currentLocation = mapRepresenter.map.get(currentLocation.getRow() - 1)
-                                .get(currentLocation.getColumn() - 1);
-                        break;
-                    default:
-                        return null;
-                }
-            }
-        } catch (IndexOutOfBoundsException e) {
-            return decisionTaken("stop");
-        }
-        return decisionTaken("heading", heading.toString());
-    }
-
-    public Heading getDirection() {
-        return direction;
-    }
-
-    public String echo(Heading heading) {
-        return decisionTaken("echo", heading.toString());
-    }
-
-    public String scan() {
-        return decisionTaken("scan");
-    }
-
-    public String stop() {
-        return decisionTaken("stop");
-    }
-
-    public Integer getBatteryLevel() {
-        return batteryLevel;
-    }
-
-    public String getAction() {
         return action;
     }
 
-    public LocationPoint getCurrentLocation() {
-        return currentLocation;
+    public JSONObject turnLeft() {
+        JSONObject action = new JSONObject();
+        JSONObject extra = new JSONObject();
+        action.put("action", "heading");
+        extra.put("direction", this.direction.turnLeft().getIcon());
+        action.put("parameters", extra);
+
+        this.direction = this.direction.turnLeft();
+        return action;
     }
 
-    public Heading getCurrentHeading() {
-        return currentHeading;
-    }
-    public void setCurrentHeading(Heading currentHeading) {
-        this.currentHeading = currentHeading;
-    }
+    public JSONObject turnRight() {
+        JSONObject action = new JSONObject();
+        JSONObject extra = new JSONObject();
+        action.put("action", "heading");
+        extra.put("direction", this.direction.turnRight().getIcon());
+        action.put("parameters", extra);
 
-    public void setCurrentLocation(LocationPoint currentLocation) {
-        this.currentLocation = currentLocation;
-    }
-
-    public Boolean getSpawnedFacingGround() {
-        return spawnedFacingGround;
+        this.direction = this.direction.turnRight();
+        return action;
     }
 
-
-    public void updateBatteryLevel(Integer cost) {
-        if (cost < 0) {
-            throw new IllegalArgumentException("Cost cannot be negative");
+    public JSONObject uTurn() {
+        this.turnCounter++;
+        if ((this.turnCounter / 2) % 2 == 0) {
+            return this.turnLeft();
+        } else {
+            return this.turnRight();
         }
-        batteryLevel -= cost;
     }
 
-    String decisionTaken(String command) {
-
-        // ensures the commands are valid
-        if (!command.equals("fly") && !command.equals("scan") && !command.equals("stop")) {
-            throw new IllegalArgumentException("Invalid command");
-        }
-        action = command;
-        String nextDecision = "{\"action\": \"" + command + "\"}";
-        return nextDecision;
+    public JSONObject simpleAction(Action type) {
+        JSONObject action = new JSONObject();
+        action.put("action", type.term);
+        return action;
     }
 
-    String decisionTaken(String command, String direction) {
-
-        // need to make sure that the commands are valid
-        if (!command.equals("echo") && !command.equals("heading")) {
-            throw new IllegalArgumentException("Invalid command");
-        }
-        // ensures the direction is valid
-        if (!direction.equals("N") && !direction.equals("E") && !direction.equals("S") && !direction.equals("W")) {
-            throw new IllegalArgumentException("Invalid direction");
-        }
-
-        // if the command is heading, then the currentDirection is the new heading
-        if (command.equals("heading")) {
-            this.currentHeading = Heading.valueOf(direction);
-        }
-
-        // store the parameters of the next decision
-        action = command;
-        this.direction = Heading.valueOf(direction);
-
-        String nextDecision = "{\"action\": \"" + command + "\", \"parameters\": { \"direction\": \"" + direction
-                + "\"}}";
-        return nextDecision;
+    public Direction currentDir() {
+        return this.direction;
     }
 
-    
+    public void batteryLost(int cost) {
+        battery.lowerBattery(cost);
+    }
 
 }
