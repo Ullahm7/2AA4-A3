@@ -55,9 +55,11 @@ public class ListMap {
 
     public void printEmergency() {
         if (mainPoints.size() != 0) {
-            logger.info("\nEMERGENCY ID: " + mainPoints.get(0).returnID());
-            logger.info("X: " + mainPoints.get(0).getX());
-            logger.info("Y: " + mainPoints.get(0).getY());
+            if (mainPoints.get(0).getType() == Kind.EmergencySite) {
+                logger.info("\nEMERGENCY ID: " + mainPoints.get(0).returnID());
+                logger.info("X: " + mainPoints.get(0).getX());
+                logger.info("Y: " + mainPoints.get(0).getY());
+            }
         }
     }
 
