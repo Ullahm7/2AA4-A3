@@ -28,7 +28,7 @@ public class ListMap {
             int j = i - 1;
 
             // Move elements that are greater than key one position ahead
-            while (j >= eQuant && mainPoints.get(j).distanceTo(mainPoints.get(0)) > key.distanceTo(mainPoints.get(0))) {
+            while (j >= eQuant && mainPoints.get(j).distanceTo(mainPoints.get(0)) < key.distanceTo(mainPoints.get(0))) {
                 mainPoints.set(j + 1, mainPoints.get(j)); // Shift element right
                 j--;
             }
