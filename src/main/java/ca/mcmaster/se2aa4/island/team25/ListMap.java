@@ -47,4 +47,19 @@ public class ListMap {
         return mainPoints.get(mainPoints.size() - 1);
     }
 
+    public void printEmergency() {
+        System.out.println("ID: " + mainPoints.get(0).returnID());
+        System.out.println("X: " + mainPoints.get(0).getX());
+        System.out.println("Y: " + mainPoints.get(0).getY());
+    }
+
+    public void printCreeks() {
+        for (int i = 1; i < mainPoints.size(); i++) {
+            System.out.println("ID: " + mainPoints.get(i).returnID());
+            System.out.println("X: " + mainPoints.get(i).getX());
+            System.out.println("Y: " + mainPoints.get(i).getY());
+            System.out.println();
+        }
+    }
+
 }
