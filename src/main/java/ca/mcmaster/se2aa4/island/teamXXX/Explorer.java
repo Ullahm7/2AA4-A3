@@ -1,16 +1,14 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 
 import java.io.StringReader;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ca.mcmaster.se2aa4.island.teamXXX.*;
-
-import eu.ace_design.island.bot.IExplorerRaid;
-
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import org.json.JSONArray;
-import java.util.List;
+
+import eu.ace_design.island.bot.IExplorerRaid;
 
 
 public class Explorer implements IExplorerRaid {
@@ -83,12 +81,5 @@ public class Explorer implements IExplorerRaid {
             logger.info("** Delivering the final report");
             return closestCreek.getIdentifiers().get(0);
         }
-    }
-    public static void main(String[] args) {
-        Explorer e = new Explorer();
-        e.initialize("{\"budget\":1000,\"heading\":\"N\"}");
-        e.takeDecision();
-        e.acknowledgeResults("{\"cost\":1,\"status\":\"success\",\"extras\":{\"range\":1}}");
-        e.deliverFinalReport();
     }
 }
