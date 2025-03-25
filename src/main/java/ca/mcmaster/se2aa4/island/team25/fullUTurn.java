@@ -36,6 +36,9 @@ public class fullUTurn implements SearchMethod {
 
     @Override
     public SearchMethod searchType() {
+        if (drone.goHome()) {
+            return new FindHome(this.drone);
+        } 
         if (this.counter == 5) {
             return new StraightLine(this.drone, true);
         }

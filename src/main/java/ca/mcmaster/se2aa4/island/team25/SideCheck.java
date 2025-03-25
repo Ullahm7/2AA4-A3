@@ -38,12 +38,22 @@ public class SideCheck implements SearchMethod {
     @Override
     public void giveInfo(JSONObject info) {
         if (info.has("found")) {
-            this.emptySide = !("GROUND".equals(info.getString("found")) && info.getInt("range") < 4);
+            if ("GROUND".equals(info.getString("found"))) {
+                if (info.getInt("range") > 3) {
+                    this.emptySide = true;
+                }
+            }
+            else {
+                this.emptySide = true;
+            }
         }
     }
 
     @Override
     public SearchMethod searchType() {
+        if (drone.goHome()) {
+            return new FindHome(this.drone);
+        } 
         if (this.emptySide) {
             return new UTurn(this.drone, this.flipped);
         }

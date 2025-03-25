@@ -55,7 +55,8 @@ public class Explorer implements IExplorerRaid {
 
     @Override
     public String deliverFinalReport() {
-        return "no creek found";
+        logger.info(this.patroller.report());
+        return this.patroller.report();
     }
 
 }

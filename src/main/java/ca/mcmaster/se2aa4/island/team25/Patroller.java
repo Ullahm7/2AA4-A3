@@ -27,12 +27,6 @@ public class Patroller {
         JSONObject action = new JSONObject();
         action = currentSearch.nextStep();
 
-        if (action.toString().equals(this.done.toString())) {
-            this.mainMap.sortPoint();
-            this.mainMap.printCreeks();
-            this.mainMap.printEmergency();
-        }
-
         return action.toString();
 
     }
@@ -54,6 +48,14 @@ public class Patroller {
             }
 
         }
+    }
 
+    public String report() {
+        String final_report = "";
+        mainMap.sortPoint();
+        final_report += "CLOSEST CREEK: ";
+        final_report += mainMap.returnCloseInterestPoint();
+        final_report += mainMap.returnEmergencyPoint();
+        return final_report;
     }
 }

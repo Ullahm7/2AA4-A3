@@ -42,15 +42,16 @@ public class ListMap {
         }
     }
 
-    private void report() {
+
+    public String returnEmergencyPoint() {
+        if (mainPoints.get(0).getType() == Kind.EmergencySite) {
+            return "\nEMERGENCY SITE ID " + mainPoints.get(0).returnID();
+        }
+        return "";
     }
 
-    public InterestPoint returnEmergencyPoint() {
-        return mainPoints.get(0);
-    }
-
-    public InterestPoint returnCloseInterestPoint() {
-        return mainPoints.get(mainPoints.size() - 1);
+    public String returnCloseInterestPoint() {
+        return mainPoints.get(mainPoints.size() - 1).returnID();
     }
 
     public void printEmergency() {

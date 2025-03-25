@@ -22,6 +22,7 @@ public class UTurn implements SearchMethod {
 
     @Override
     public JSONObject nextStep() {
+        
         //logger.info("*** IN UTURN");
         if (turnCount > 1) {
             this.turnCount++;
@@ -43,6 +44,9 @@ public class UTurn implements SearchMethod {
 
     @Override
     public SearchMethod searchType() {
+        if (drone.goHome()) {
+            return new FindHome(this.drone);
+        } 
         if (turnCount < 3) {
             return this;
         }
