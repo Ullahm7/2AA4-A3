@@ -1,12 +1,8 @@
-package ca.mcmaster;
+package ca.mcmaster.se2aa4.island.team25;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
-
-import ca.mcmaster.se2aa4.island.team25.InterestPoint;
-
-import ca.mcmaster.se2aa4.island.team25.Kind;
 
 import org.junit.jupiter.api.Test;
 
