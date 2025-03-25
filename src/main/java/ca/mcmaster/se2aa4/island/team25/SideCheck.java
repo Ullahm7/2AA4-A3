@@ -9,8 +9,8 @@ public class SideCheck implements SearchMethod {
     private final Logger logger = LogManager.getLogger();
     private Drone drone;
 
+    private boolean sideCheck = false;
     private boolean emptySide = false;
-
     public SideCheck(Drone drone) {
         this.drone = drone;
     }
@@ -18,21 +18,21 @@ public class SideCheck implements SearchMethod {
     @Override
     public JSONObject nextStep() {
         logger.info("*** SIDE CHECK STEP");
-        if (this.emptySide) {
-            this.emptySide = !this.emptySide;
+        if (this.sideCheck) {
+            this.sideCheck = !this.sideCheck;
             if (this.drone.currentDir() == Direction.NORTH) {
                 return this.drone.radarDirection(this.drone.currentDir().turnRight());
             }
             return this.drone.radarDirection(this.drone.currentDir().turnLeft());
         }
-        this.emptySide = true;
+        this.sideCheck = true;
         return this.drone.simpleAction(Action.FLY);
     }
 
     @Override
     public void giveInfo(JSONObject info) {
         if (info.has("found")) {
-            this.emptySide = "GROUND".equals(info.getString("found")) && info.getInt("range") < 3;
+            this.emptySide = !("GROUND".equals(info.getString("found")) && info.getInt("range") < 3);
         }
     }
 

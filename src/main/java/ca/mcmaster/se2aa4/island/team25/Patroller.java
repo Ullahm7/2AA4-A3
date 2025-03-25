@@ -22,9 +22,9 @@ public class Patroller {
     public String nextAction() {
         this.currentSearch = currentSearch.searchType();
         
-        this.mainMap.printCreeks();
-        this.mainMap.printEmergency();
-        
+        //this.mainMap.printCreeks();
+        //this.mainMap.printEmergency();
+
         JSONObject action = new JSONObject();
         action = currentSearch.nextStep();
         return action.toString();
