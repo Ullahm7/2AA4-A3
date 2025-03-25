@@ -9,7 +9,7 @@ public class fullUTurn implements SearchMethod {
     private final Logger logger = LogManager.getLogger();
     private Drone drone;
 
-    private int counter = -1;
+    private int counter = 0;
     private boolean isNorth;
 
     public fullUTurn(Drone drone) {
@@ -19,7 +19,7 @@ public class fullUTurn implements SearchMethod {
 
     @Override
     public JSONObject nextStep() {
-        logger.info("*** STOPPING ***");
+        logger.info("*** STOPPING ***" + (this.counter+1));
         this.counter++;
         if (this.isNorth) {
             switch (this.counter) {
@@ -60,7 +60,7 @@ public class fullUTurn implements SearchMethod {
 
     @Override
     public SearchMethod searchType() {
-        if (this.counter > 5) {
+        if (this.counter == 5) {
             return new StraightLine(this.drone);
         }
         return this;

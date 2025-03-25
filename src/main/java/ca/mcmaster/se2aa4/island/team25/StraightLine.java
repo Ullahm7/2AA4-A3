@@ -15,11 +15,13 @@ public class StraightLine implements SearchMethod {
     private boolean checkEnd = true;
     private boolean isEnd = false;
 
+    private boolean flipped;
     private boolean echoAhead = true;
 
-    public StraightLine(Drone drone) {
+    public StraightLine(Drone drone, boolean flipped) {
         logger.info("*** STARTING A STRAIGHT ***");
         this.drone = drone;
+        this.flipped = flipped;
     }
 
     @Override
@@ -63,7 +65,7 @@ public class StraightLine implements SearchMethod {
             return new fullUTurn(this.drone);
         }
         if (!this.echoAhead) {
-            return new SideCheck(this.drone);
+            return new SideCheck(this.drone, this.flipped);
         }
         return this;
     }
