@@ -23,6 +23,7 @@ public class Drone {
 
     }
 
+   
     public boolean goHome() {
         int currentBatt = this.battery.currentBattery();
         int batteryToHome = ((this.currentCord.getX() + this.currentCord.getY()) * 4);

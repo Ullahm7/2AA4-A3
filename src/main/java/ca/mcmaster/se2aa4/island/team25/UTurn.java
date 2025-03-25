@@ -9,7 +9,7 @@ public class UTurn implements SearchMethod {
     private final Logger logger = LogManager.getLogger();
     private Drone drone;
 
-    private int turnCount = 0;
+    private int turnCount = -1;
     private boolean isNorth;
     private boolean flipped;
 
@@ -17,13 +17,20 @@ public class UTurn implements SearchMethod {
         this.drone = drone;
         this.flipped = flipped;
         this.isNorth = (this.drone.currentDir() == Direction.NORTH);
-        if (flipped) {this.isNorth = !this.isNorth;}
+        if (flipped) {
+            this.isNorth = !this.isNorth;
+        }
     }
 
     @Override
     public JSONObject nextStep() {
-        
+
         //logger.info("*** IN UTURN");
+       
+        if (turnCount == -1) {
+            this.turnCount++;
+            return this.drone.radarDirection(this.drone.currentDir());
+        }
         if (turnCount > 1) {
             this.turnCount++;
             return this.drone.simpleAction(Action.SCAN);
@@ -39,15 +46,15 @@ public class UTurn implements SearchMethod {
 
     @Override
     public void giveInfo(JSONObject info) {
-
+        
     }
 
     @Override
     public SearchMethod searchType() {
         if (drone.goHome()) {
             return new FindHome(this.drone);
-        } 
-        if (turnCount < 3) {
+        }
+        if (turnCount < 2) {
             return this;
         }
         return new StraightLine(this.drone, this.flipped);

@@ -20,14 +20,15 @@ public class fullUTurn implements SearchMethod {
     @Override
     public JSONObject nextStep() {
         //logger.info("*** STOPPING ***" + (this.counter + 1));
+
         this.counter++;
-        return this.counter == 4
-                ? this.drone.simpleAction(Action.FLY)
-                : this.counter == 6
-                        ? this.drone.simpleAction(Action.STOP)
-                        : (this.isNorth
-                                ? this.drone.turnRight()
-                                : this.drone.turnLeft());
+        if (this.counter == 1 || this.counter == 3) {
+            return this.drone.simpleAction(Action.FLY);
+        }
+
+        return this.isNorth
+                ? this.drone.turnLeft()
+                : this.drone.turnRight();
     }
 
     @Override
@@ -38,8 +39,9 @@ public class fullUTurn implements SearchMethod {
     public SearchMethod searchType() {
         if (drone.goHome()) {
             return new FindHome(this.drone);
-        } 
-        if (this.counter == 5) {
+        }
+
+        if (this.counter == 4) {
             return new StraightLine(this.drone, true);
         }
         return this;

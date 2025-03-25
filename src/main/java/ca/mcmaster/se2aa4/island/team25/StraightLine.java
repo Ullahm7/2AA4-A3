@@ -15,8 +15,8 @@ public class StraightLine implements SearchMethod {
     private boolean checkEnd = true;
     private boolean isEnd = false;
 
-    private boolean flipped;
-    private int echoAhead = 0;
+    private boolean flipped = false;
+    private boolean echoAhead = true;
 
     public StraightLine(Drone drone, boolean flipped) {
         //logger.info("*** STARTING A STRAIGHT ***"+flipped);
@@ -54,14 +54,16 @@ public class StraightLine implements SearchMethod {
                 this.checkEnd = false;
                 this.isEnd = "GROUND".equals(info.getString("found"));
             }
-            if (!"GROUND".equals(info.getString("found"))) {
-                this.echoAhead++;
+          
+            if ("OUT_OF_RANGE".equals(info.getString("found"))) {
+                this.echoAhead = false;
             }
         }
     }
 
     @Override
     public SearchMethod searchType() {
+        //logger.info("FLIPPED: " + this.flipped);
         if (drone.goHome()) {
             return new FindHome(this.drone);
         } 
@@ -71,7 +73,7 @@ public class StraightLine implements SearchMethod {
         if (!this.isEnd && this.flipped) {
             return new FindHome(this.drone);
         }
-        if (this.echoAhead > 2) {
+        if (!this.echoAhead) {
             return new SideCheck(this.drone, this.flipped);
         }
         return this;
