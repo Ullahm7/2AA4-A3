@@ -19,14 +19,14 @@ public class StraightLine implements SearchMethod {
     private boolean echoAhead = true;
 
     public StraightLine(Drone drone, boolean flipped) {
-        logger.info("*** STARTING A STRAIGHT ***");
+        //logger.info("*** STARTING A STRAIGHT ***"+flipped);
         this.drone = drone;
         this.flipped = flipped;
     }
 
     @Override
     public JSONObject nextStep() {
-        logger.info("***STRAIGHT NEXT STEP || " + (this.counter+1));
+        //logger.info("***STRAIGHT NEXT STEP || " + (this.counter+1));
         this.counter += 1;
 
         if (counter == 0) {
@@ -48,7 +48,7 @@ public class StraightLine implements SearchMethod {
 
     @Override
     public void giveInfo(JSONObject info) {
-        logger.info("*** Check response");
+        //logger.info("*** Check response");
         if (info.has("found")) {
             if (this.checkEnd) {
                 this.checkEnd = false;
@@ -60,9 +60,12 @@ public class StraightLine implements SearchMethod {
 
     @Override
     public SearchMethod searchType() {
-        logger.info("STRAIGHT SEARCH RETURN ***");
-        if (!this.isEnd) {
+        //logger.info("STRAIGHT SEARCH RETURN ***");
+        if (!this.isEnd && !this.flipped) {
             return new fullUTurn(this.drone);
+        }
+        if (!this.isEnd && this.flipped) {
+            return new FindHome(this.drone);
         }
         if (!this.echoAhead) {
             return new SideCheck(this.drone, this.flipped);

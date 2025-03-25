@@ -19,39 +19,15 @@ public class fullUTurn implements SearchMethod {
 
     @Override
     public JSONObject nextStep() {
-        logger.info("*** STOPPING ***" + (this.counter+1));
+        //logger.info("*** STOPPING ***" + (this.counter + 1));
         this.counter++;
-        if (this.isNorth) {
-            switch (this.counter) {
-                case (1):
-                    return this.drone.turnRight();
-                case (2):
-                    return this.drone.turnRight();
-                case (3):
-                    return this.drone.turnRight();
-                case (4):
-                    return this.drone.simpleAction(Action.FLY);
-                case (5):
-                    return this.drone.turnRight();
-                default:
-                    return this.drone.simpleAction(Action.STOP);
-            }
-        } else {
-            switch (this.counter) {
-                case (1):
-                    return this.drone.turnLeft();
-                case (2):
-                    return this.drone.turnLeft();
-                case (3):
-                    return this.drone.turnLeft();
-                case (4):
-                    return this.drone.simpleAction(Action.FLY);
-                case (5):
-                    return this.drone.turnLeft();
-                default:
-                    return this.drone.simpleAction(Action.STOP);
-            }
-        }
+        return this.counter == 4
+                ? this.drone.simpleAction(Action.FLY)
+                : this.counter == 6
+                        ? this.drone.simpleAction(Action.STOP)
+                        : (this.isNorth
+                                ? this.drone.turnRight()
+                                : this.drone.turnLeft());
     }
 
     @Override
@@ -61,7 +37,7 @@ public class fullUTurn implements SearchMethod {
     @Override
     public SearchMethod searchType() {
         if (this.counter == 5) {
-            return new StraightLine(this.drone);
+            return new StraightLine(this.drone, true);
         }
         return this;
     }

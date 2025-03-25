@@ -52,8 +52,8 @@ public class InitialSearch implements SearchMethod {
 
     public SearchMethod searchType() {
         if (this.searchDone) {
-            logger.info("*** FINISING INITIAL ***");
-            return new StraightLine(this.drone);
+            //logger.info("*** FINISING INITIAL ***");
+            return new StraightLine(this.drone, false);
         } else if (drone.goHome()) {
             return new FindHome(this.drone);
         } 

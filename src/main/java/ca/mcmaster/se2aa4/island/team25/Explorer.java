@@ -37,7 +37,7 @@ public class Explorer implements IExplorerRaid {
     public String takeDecision() {
 
         String decision = patroller.nextAction();
-        logger.info("** Decision: {}\n", decision);
+        //logger.info("** Decision: {}\n", decision);
         return decision;
     }
 

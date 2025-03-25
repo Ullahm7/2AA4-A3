@@ -21,9 +21,9 @@ public class SideCheck implements SearchMethod {
     @Override
     public JSONObject nextStep() {
         if (this.flipped) {
-            this.currentDir = this.currentDir.turnLeft().turnLeft();
+            this.currentDir = this.drone.currentDir().turnLeft().turnLeft();
         }
-        logger.info("*** SIDE CHECK STEP");
+        //logger.info("*** SIDE CHECK STEP WITH DIR: " + this.currentDir.toString() + " " + this.drone.currentDir().toString()+ " "+this.flipped);
         if (this.sideCheck) {
             this.sideCheck = !this.sideCheck;
             if (this.currentDir == Direction.NORTH) {
@@ -38,14 +38,14 @@ public class SideCheck implements SearchMethod {
     @Override
     public void giveInfo(JSONObject info) {
         if (info.has("found")) {
-            this.emptySide = !("GROUND".equals(info.getString("found")) && info.getInt("range") < 3);
+            this.emptySide = !("GROUND".equals(info.getString("found")) && info.getInt("range") < 4);
         }
     }
 
     @Override
     public SearchMethod searchType() {
         if (this.emptySide) {
-            return new UTurn(this.drone);
+            return new UTurn(this.drone, this.flipped);
         }
         return this;
     }

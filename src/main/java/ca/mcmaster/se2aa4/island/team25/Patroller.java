@@ -13,21 +13,28 @@ public class Patroller {
     private JSONObject lastResponse;
     Drone drone;
     SearchMethod currentSearch;
+    private JSONObject done;
 
     Patroller(Drone drone, ListMap map) {
+        this.done = new JSONObject("{\"action\":\"stop\"}");
         this.drone = drone;
         this.currentSearch = new InitialSearch(drone);
     }
 
     public String nextAction() {
         this.currentSearch = currentSearch.searchType();
-        
-        //this.mainMap.printCreeks();
-        //this.mainMap.printEmergency();
 
         JSONObject action = new JSONObject();
         action = currentSearch.nextStep();
+
+        if (action.toString().equals(this.done.toString())) {
+            this.mainMap.sortPoint();
+            this.mainMap.printCreeks();
+            this.mainMap.printEmergency();
+        }
+
         return action.toString();
+
     }
 
     public void readAction(JSONObject cost, JSONObject info) {
@@ -39,11 +46,11 @@ public class Patroller {
             JSONArray sites = info.getJSONArray("sites");
 
             for (int i = 0; i < creeks.length(); i++) {
-                this.mainMap.putPoint(creeks.getString(i),this.drone.getX(), this.drone.getY(),Kind.Creek);
+                this.mainMap.putPoint(creeks.getString(i), this.drone.getX(), this.drone.getY(), Kind.Creek);
             }
 
             for (int i = 0; i < sites.length(); i++) {
-                this.mainMap.putPoint(sites.getString(i),this.drone.getX(), this.drone.getY(),Kind.EmergencySite);
+                this.mainMap.putPoint(sites.getString(i), this.drone.getX(), this.drone.getY(), Kind.EmergencySite);
             }
 
         }
