@@ -1,13 +1,13 @@
 package ca.mcmaster.se2aa4.island.team25;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Patroller {
 
-    private final Logger logger = LogManager.getLogger();
+    //private final Logger logger = LogManager.getLogger();
 
     private ListMap mainMap = new ListMap();
     private JSONObject lastResponse;

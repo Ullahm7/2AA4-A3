@@ -1,11 +1,11 @@
 package ca.mcmaster.se2aa4.island.team25;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
 public class Battery {
 
-    private final Logger logger = LogManager.getLogger();
+    //private final Logger logger = LogManager.getLogger();
 
     private int initialBattery;
     private int battery;
