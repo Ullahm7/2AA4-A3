@@ -8,7 +8,7 @@ public class Drone {
 
     //private final Logger logger = LogManager.getLogger();
 
-    private Direction direction;
+    private Direction direction; //may change protected
     private Battery battery;
     private Coordinate currentCord;
 
@@ -22,7 +22,6 @@ public class Drone {
         this.battery = new Battery(battery);
 
     }
-
    
     public boolean goHome() {
         int currentBatt = this.battery.currentBattery();
@@ -71,13 +70,19 @@ public class Drone {
         return createDirectionAction("heading", this.direction);
     }
 
-
     public int getX() {
         return this.currentCord.getX();
     }
 
     public int getY() {
         return this.currentCord.getY();
+    }
+
+    public Coordinate setCoordinate(int x, int y){
+        return this.currentCord = new Coordinate(x, y);
+    }
+    public Battery getBattery(){
+        return this.battery;
     }
 
     public JSONObject simpleAction(Action type) {
@@ -92,6 +97,7 @@ public class Drone {
     public Direction currentDir() {
         return this.direction;
     }
+    
 
     public void batteryLost(int cost) {
         battery.lowerBattery(cost);
