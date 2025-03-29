@@ -20,7 +20,7 @@ public class FullUTurn implements SearchMethod {
     @Override
     public JSONObject nextStep() {
         //logger.info("*** STOPPING ***" + (this.counter + 1));
-
+        //testing
         this.counter++;
         if (this.counter == 1 || this.counter == 3) {
             return this.drone.simpleAction(Action.FLY);
