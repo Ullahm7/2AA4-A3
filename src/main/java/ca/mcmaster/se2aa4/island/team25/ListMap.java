@@ -42,7 +42,6 @@ public class ListMap {
         }
     }
 
-
     public String returnEmergencyPoint() {
         if (mainPoints.get(0).getType() == Kind.EmergencySite) {
             return "\nEMERGENCY SITE ID " + mainPoints.get(0).returnID();
