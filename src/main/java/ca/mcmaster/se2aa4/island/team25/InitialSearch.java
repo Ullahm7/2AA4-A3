@@ -9,12 +9,12 @@ public class InitialSearch implements SearchMethod {
     //private final Logger logger = LogManager.getLogger();
 
     private Drone drone;
-    private int stepNum = -1;
-    private boolean landFound = false;
-    private int distToIsland = 0;
-    private boolean turnToLand = false;
+    protected int stepNum = -1;
+    protected boolean landFound = false;
+    protected int distToIsland = 0;
+    protected boolean turnToLand = false;
 
-    private boolean searchDone = false;
+    protected boolean searchDone = false;
 
     public InitialSearch(Drone drone) {
         this.drone = drone;
@@ -23,7 +23,7 @@ public class InitialSearch implements SearchMethod {
     public JSONObject nextStep() {
         stepNum += 1;
         if (!landFound) {
-            if (stepNum % 2 == 0) {
+            if (stepNum % 2 == 0) { 
                 return this.drone.radarDirection(this.drone.currentDir().turnRight());
             } else {
                 return this.drone.simpleAction(Action.FLY);

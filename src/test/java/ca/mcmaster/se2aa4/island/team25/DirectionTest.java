@@ -14,26 +14,33 @@ public class DirectionTest {
 
     @BeforeEach
     public void initializeDroneDirectionalFace(){
+
         droneCurrentDirectionNorth = Direction.NORTH; 
         droneCurrentDirectionEast = Direction.EAST;   
         droneCurrentDirectionSouth = Direction.SOUTH;
         droneCurrentDirectionWest = Direction.WEST;
+
     }
 
     @Test
     public void testDirectionTurnRight() {
+
         assertEquals(Direction.EAST, droneCurrentDirectionNorth.turnRight());
         assertEquals(Direction.SOUTH, droneCurrentDirectionEast.turnRight());
         assertEquals(Direction.WEST, droneCurrentDirectionSouth.turnRight());
         assertEquals(Direction.NORTH, droneCurrentDirectionWest.turnRight());
+
     }
+
 
     @Test
     public void testDirectionTurnLeft() {
+
         assertEquals(Direction.WEST, droneCurrentDirectionNorth.turnLeft());
         assertEquals(Direction.NORTH, droneCurrentDirectionEast.turnLeft());
         assertEquals(Direction.EAST, droneCurrentDirectionSouth.turnLeft());
         assertEquals(Direction.SOUTH, droneCurrentDirectionWest.turnLeft());
+        
     }
     
 }

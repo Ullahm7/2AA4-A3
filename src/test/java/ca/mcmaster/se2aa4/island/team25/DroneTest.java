@@ -12,20 +12,28 @@ public class DroneTest {
 
     @BeforeEach
     public void initializeDroneBatteryAndHeading() {
+
         drone = new Drone(100, 'N'); 
+        
     }
 
     @Test
     public void testSufficientBatteryForSearch() {
+
         drone.setCoordinate(3, 4);
+
         assertFalse(drone.goHome());
     }
 
     @Test
     public void testInsufficientBatteryForSearch() {
+
         drone.batteryLost(73); 
+
         drone.setCoordinate(3, 4); 
+
         assertTrue(drone.goHome());
+
     }
 
 }
