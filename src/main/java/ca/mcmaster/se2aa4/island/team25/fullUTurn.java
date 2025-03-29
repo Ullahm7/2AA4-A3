@@ -32,10 +32,6 @@ public class FullUTurn implements SearchMethod {
     }
 
     @Override
-    public void giveInfo(JSONObject info) {
-    }
-
-    @Override
     public SearchMethod searchType() {
         if (drone.goHome()) {
             return new FindHome(this.drone);

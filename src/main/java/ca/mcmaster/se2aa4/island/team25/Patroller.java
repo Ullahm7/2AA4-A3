@@ -33,7 +33,9 @@ public class Patroller {
 
     public void readAction(JSONObject cost, JSONObject info) {
         drone.batteryLost(cost.getInt("cost"));
-        currentSearch.giveInfo(info);
+        if (currentSearch instanceof SearchMethodInfo) {
+            ((SearchMethodInfo) currentSearch).giveInfo(info); 
+        }
 
         if (info.has("creeks")) {
             JSONArray creeks = info.getJSONArray("creeks");

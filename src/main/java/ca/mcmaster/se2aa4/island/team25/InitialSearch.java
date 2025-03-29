@@ -4,7 +4,7 @@ package ca.mcmaster.se2aa4.island.team25;
 //import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
-public class InitialSearch implements SearchMethod {
+public class InitialSearch implements SearchMethodInfo {
 
     //private final Logger logger = LogManager.getLogger();
 

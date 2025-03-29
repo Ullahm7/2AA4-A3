@@ -37,10 +37,6 @@ public class FindHome implements SearchMethod {
         }
     }
 
-    public void giveInfo(JSONObject info) {
-        
-    }
-
     public SearchMethod searchType() {
         return this;
     }

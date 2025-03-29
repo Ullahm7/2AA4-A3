@@ -5,7 +5,6 @@ import org.json.JSONObject;
 public interface SearchMethod {
 
     JSONObject nextStep();
-    void giveInfo(JSONObject info);
+    //void giveInfo(JSONObject info);
     SearchMethod searchType();
-
 }

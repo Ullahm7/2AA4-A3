@@ -44,10 +44,10 @@ public class UTurn implements SearchMethod {
         }
     }
 
-    @Override
-    public void giveInfo(JSONObject info) {
+    
+    //public void giveInfo(JSONObject info) {
         
-    }
+    //}
 
     @Override
     public SearchMethod searchType() {
