@@ -4,7 +4,7 @@ package ca.mcmaster.se2aa4.island.team25;
 //import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
-public class fullUTurn implements SearchMethod {
+public class FullUTurn implements SearchMethod {
 
     //private final Logger logger = LogManager.getLogger();
     private Drone drone;
@@ -12,7 +12,7 @@ public class fullUTurn implements SearchMethod {
     private int counter = 0;
     private boolean isNorth;
 
-    public fullUTurn(Drone drone) {
+    public FullUTurn(Drone drone) {
         this.drone = drone;
         this.isNorth = (this.drone.currentDir() == Direction.NORTH);
     }

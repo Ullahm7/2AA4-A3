@@ -68,7 +68,7 @@ public class StraightLine implements SearchMethod {
             return new FindHome(this.drone);
         } 
         if (!this.isEnd && !this.flipped) {
-            return new fullUTurn(this.drone);
+            return new FullUTurn(this.drone);
         }
         if (!this.isEnd && this.flipped) {
             return new FindHome(this.drone);
