@@ -8,7 +8,7 @@ public class UTurn implements SearchMethod {
 
     //private final Logger logger = LogManager.getLogger();
     private Drone drone;
-
+    
     private int turnCount = -1;
     private boolean isNorth;
     private boolean flipped;
@@ -53,6 +53,7 @@ public class UTurn implements SearchMethod {
     public SearchMethod searchType() {
         if (drone.goHome()) {
             return new FindHome(this.drone);
+
         }
         if (turnCount < 2) {
             return this;

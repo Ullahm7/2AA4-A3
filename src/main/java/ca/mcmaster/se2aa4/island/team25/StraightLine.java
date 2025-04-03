@@ -9,6 +9,9 @@ public class StraightLine implements SearchMethodInfo {
     //private final Logger logger = LogManager.getLogger();
     private Drone drone;
 
+    private SearchFactory searchFactory;
+    private SearchInfoFactory searchInfoFactory;
+
     private int counter = -1;
     private boolean scan = true;
 

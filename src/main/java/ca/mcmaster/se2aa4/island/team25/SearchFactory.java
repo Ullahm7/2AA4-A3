@@ -20,23 +20,9 @@ public class SearchFactory {
         else if(searchType.equalsIgnoreCase("UTURN")){
             
             return new UTurn(drone, flipped);
-
-        }
-        else if(searchType.equalsIgnoreCase("INITIALSEARCH")){
-            
-            return new InitialSearch(drone);
             
         }
-        else if(searchType.equalsIgnoreCase("SIDECHECK")){
-            
-            return new SideCheck(drone, flipped);
-            
-        }
-        else if(searchType.equalsIgnoreCase("STRAIGHTLINE")){
-            
-            return new StraightLine(drone, flipped);
-            
-        }
+        
         return null;
     }
     

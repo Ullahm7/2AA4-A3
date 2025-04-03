@@ -10,6 +10,7 @@ public class SideCheck implements SearchMethodInfo {
     private Drone drone;
     private Direction currentDir;
     private SearchFactory searchFactory;
+    private SearchInfoFactory searchInfoFactory;
     private boolean flipped;
     private boolean sideCheck = false;
     private boolean emptySide = false;
@@ -75,12 +76,10 @@ public class SideCheck implements SearchMethodInfo {
     @Override
     public SearchMethod searchType() {
         if (drone.goHome()) {
-            //return new FindHome(this.drone);
-            return searchFactory.getSearchMethod("FINDHOME", this.drone, false);
+            return new FindHome(this.drone);
         }
         if (this.fullTurn || this.emptySide) {
-            //return new UTurn(this.drone, this.flipped);
-            return searchFactory.getSearchMethod("UTURN", this.drone, this.flipped);
+            return new UTurn(this.drone, this.flipped);
         }
         return this;
     }

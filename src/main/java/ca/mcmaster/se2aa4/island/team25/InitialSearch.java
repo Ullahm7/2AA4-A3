@@ -14,6 +14,9 @@ public class InitialSearch implements SearchMethodInfo {
     protected int distToIsland = 0;
     protected boolean turnToLand = false;
 
+    private SearchFactory searchFactory;
+    private SearchInfoFactory searchInfoFactory;
+
     protected boolean searchDone = false;
 
     public InitialSearch(Drone drone) {
@@ -55,7 +58,7 @@ public class InitialSearch implements SearchMethodInfo {
             //logger.info("*** FINISING INITIAL ***");
             return new StraightLine(this.drone, false);
         } else if (drone.goHome()) {
-            return new FindHome(this.drone);
+            return new FindHome(this.drone);  
         } 
         else {
             return this;

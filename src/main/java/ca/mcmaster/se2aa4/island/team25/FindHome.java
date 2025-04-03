@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 public class FindHome implements SearchMethod {
 
+    
     //private final Logger logger = LogManager.getLogger();
 
     private Drone drone;

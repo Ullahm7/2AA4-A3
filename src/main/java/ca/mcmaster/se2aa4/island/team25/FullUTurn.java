@@ -6,6 +6,9 @@ import org.json.JSONObject;
 
 public class FullUTurn implements SearchMethod {
 
+    private SearchFactory searchFactory;
+    private SearchInfoFactory searchInfoFactory;
+
     //private final Logger logger = LogManager.getLogger();
     private Drone drone;
 
