@@ -7,7 +7,10 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
 public class ListMap {
+    
     private ArrayList<InterestPoint> mainPoints;
+   // Map map = new Map(mainPoints);
+    //Iterator<InterestPoint> iterator = map.createIterator();
     private int eQuant = 0;
 
     private final Logger logger = LogManager.getLogger();
@@ -30,15 +33,40 @@ public class ListMap {
     public void sortPoint() {
         int size = mainPoints.size();
         for (int i = eQuant; i < size; i++) {
-            InterestPoint key = mainPoints.get(i);
+            // Use Map to create an iterator for sorting
+            Map map = new Map(mainPoints);
+            Iterator<InterestPoint> iterator = map.createIterator();
+            
+            // Advance the iterator to the current element (key)
+            for (int k = 0; k < i; k++) {
+                iterator.next();
+            }
+            InterestPoint key = iterator.next();
             int j = i - 1;
 
-            // Move elements that are greater than key one position ahead
-            while (j >= eQuant && mainPoints.get(j).distanceTo(mainPoints.get(0)) < key.distanceTo(mainPoints.get(0))) {
-                mainPoints.set(j + 1, mainPoints.get(j)); // Shift element right
-                j--;
+            // Create a new iterator for the inner while loop
+            Iterator<InterestPoint> jIterator = map.createIterator();
+            
+            // Advance the second iterator to the current position
+            for (int k = 0; k < j; k++) {
+                jIterator.next();
             }
-            mainPoints.set(j + 1, key); // Insert key at correct position
+
+            // Move elements that are greater than key one position ahead
+            while (j >= eQuant && jIterator.hasNext()) {
+                InterestPoint previous = jIterator.next();
+                if (previous.distanceTo(mainPoints.get(0)) < key.distanceTo(mainPoints.get(0))) {
+                    j--;
+                } else {
+                    break; // Exit if we find a valid spot
+                }
+            }
+
+            // Remove and insert the key at correct position
+            if (j + 1 != i) {
+                mainPoints.remove(i); // Remove key temporarily
+                mainPoints.add(j + 1, key); // Insert key at the correct position
+            }
         }
     }
 
