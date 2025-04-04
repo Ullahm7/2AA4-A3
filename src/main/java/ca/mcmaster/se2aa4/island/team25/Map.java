@@ -1,7 +1,6 @@
 package ca.mcmaster.se2aa4.island.team25;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Map implements Aggregate<InterestPoint> {
 
@@ -11,7 +10,6 @@ public class Map implements Aggregate<InterestPoint> {
         this.interestPoints = interestPoints;
     }
 
-    @Override
     public Iterator createIterator() {
         return new ListMapIterator(interestPoints);
     }

@@ -1,26 +1,20 @@
 package ca.mcmaster.se2aa4.island.team25;
 
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
+
 import org.json.JSONObject;
 
 public class Drone {
-
-    //private final Logger logger = LogManager.getLogger();
 
     private Direction direction; //may change protected
     private Battery battery;
     private Coordinate currentCord;
 
-    private int turnCounter = -1;
-    private int perfectTurn = -1;
-
-
     public Drone(int battery, char heading) {
+
         this.currentCord = new Coordinate(0, 0);
         this.direction = Direction.charToDir(heading);
         this.battery = new Battery(battery);
-
+        
     }
    
     public boolean goHome() {
@@ -98,7 +92,6 @@ public class Drone {
         return this.direction;
     }
     
-
     public void batteryLost(int cost) {
         battery.lowerBattery(cost);
     }

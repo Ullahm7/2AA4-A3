@@ -10,7 +10,7 @@ public class Patroller {
     //private final Logger logger = LogManager.getLogger();
 
     private ListMap mainMap = new ListMap();
-    private JSONObject lastResponse;
+    //private JSONObject lastResponse;
     Drone drone;
     SearchMethod currentSearch;
     private JSONObject done;
