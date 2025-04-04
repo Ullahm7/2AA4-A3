@@ -9,9 +9,6 @@ public class StraightLine implements SearchMethodInfo {
     //private final Logger logger = LogManager.getLogger();
     private Drone drone;
 
-    private SearchFactory searchFactory;
-    private SearchInfoFactory searchInfoFactory;
-
     private int counter = -1;
     private boolean scan = true;
 
@@ -21,10 +18,17 @@ public class StraightLine implements SearchMethodInfo {
     private boolean flipped = false;
     private boolean echoAhead = true;
 
+    private FindHomeFactory findHomeFactory;
+    private SideCheckFactory sideCheckFactory;
+    private FullUTurnFactory fullUTurnFactory;
+
     public StraightLine(Drone drone, boolean flipped) {
         //logger.info("*** STARTING A STRAIGHT ***"+flipped);
         this.drone = drone;
         this.flipped = flipped;
+        this.findHomeFactory = new FindHomeFactory();
+        this.sideCheckFactory = new SideCheckFactory();
+        this.fullUTurnFactory = new FullUTurnFactory();
     }
 
     @Override
@@ -68,16 +72,20 @@ public class StraightLine implements SearchMethodInfo {
     public SearchMethod searchType() {
         //logger.info("FLIPPED: " + this.flipped);
         if (drone.goHome()) {
-            return new FindHome(this.drone);
+            //return new FindHome(this.drone);
+            return findHomeFactory.createSearch(this.drone, this.flipped);
         } 
         if (!this.isEnd && !this.flipped) {
-            return new FullUTurn(this.drone);
+            //return new FullUTurn(this.drone);
+            return fullUTurnFactory.createSearch(this.drone, this.flipped);
         }
         if (!this.isEnd && this.flipped) {
-            return new FindHome(this.drone);
+            //return new FindHome(this.drone);
+            return findHomeFactory.createSearch(this.drone, this.flipped);
         }
         if (!this.echoAhead) {
-            return new SideCheck(this.drone, this.flipped);
+            //return new SideCheck(this.drone, this.flipped);
+            return sideCheckFactory.createSearch(this.drone, this.flipped);
         }
         return this;
     }

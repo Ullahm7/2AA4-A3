@@ -13,6 +13,9 @@ public class UTurn implements SearchMethod {
     private boolean isNorth;
     private boolean flipped;
 
+    private FindHomeFactory findHomeFactory;
+    private StraightLineFactory straightLineFactory;
+
     public UTurn(Drone drone, boolean flipped) {
         this.drone = drone;
         this.flipped = flipped;
@@ -20,6 +23,8 @@ public class UTurn implements SearchMethod {
         if (flipped) {
             this.isNorth = !this.isNorth;
         }
+        this.findHomeFactory = new FindHomeFactory();
+        this.straightLineFactory = new StraightLineFactory();
     }
 
     @Override
@@ -52,12 +57,14 @@ public class UTurn implements SearchMethod {
     @Override
     public SearchMethod searchType() {
         if (drone.goHome()) {
-            return new FindHome(this.drone);
+            //return new FindHome(this.drone);
+            return findHomeFactory.createSearch(this.drone, this.flipped);
 
         }
         if (turnCount < 2) {
             return this;
         }
-        return new StraightLine(this.drone, this.flipped);
+        //return new StraightLine(this.drone, this.flipped);
+        return straightLineFactory.createSearch(this.drone, this.flipped);
     }
 }

@@ -14,13 +14,16 @@ public class InitialSearch implements SearchMethodInfo {
     protected int distToIsland = 0;
     protected boolean turnToLand = false;
 
-    private SearchFactory searchFactory;
-    private SearchInfoFactory searchInfoFactory;
+    private FindHomeFactory findHomeFactory;
+    private StraightLineFactory straightLineFactory;
+
 
     protected boolean searchDone = false;
 
     public InitialSearch(Drone drone) {
         this.drone = drone;
+        this.findHomeFactory = new FindHomeFactory();
+        this.straightLineFactory = new StraightLineFactory();
     }
 
     public JSONObject nextStep() {
@@ -56,9 +59,11 @@ public class InitialSearch implements SearchMethodInfo {
     public SearchMethod searchType() {
         if (this.searchDone) {
             //logger.info("*** FINISING INITIAL ***");
-            return new StraightLine(this.drone, false);
+            //return new StraightLine(this.drone, false);
+            return straightLineFactory.createSearch(this.drone, false);
         } else if (drone.goHome()) {
-            return new FindHome(this.drone);  
+            //return new FindHome(this.drone);
+            return findHomeFactory.createSearch(this.drone, false);  
         } 
         else {
             return this;

@@ -6,18 +6,20 @@ import org.json.JSONObject;
 
 public class FullUTurn implements SearchMethod {
 
-    private SearchFactory searchFactory;
-    private SearchInfoFactory searchInfoFactory;
-
     //private final Logger logger = LogManager.getLogger();
     private Drone drone;
 
     private int counter = 0;
     private boolean isNorth;
 
+    private FindHomeFactory findHomeFactory;
+    private StraightLineFactory straightLineFactory;
+
     public FullUTurn(Drone drone) {
         this.drone = drone;
         this.isNorth = (this.drone.currentDir() == Direction.NORTH);
+        this.findHomeFactory = new FindHomeFactory();
+        this.straightLineFactory = new StraightLineFactory();
     }
 
     @Override
@@ -37,11 +39,14 @@ public class FullUTurn implements SearchMethod {
     @Override
     public SearchMethod searchType() {
         if (drone.goHome()) {
-            return new FindHome(this.drone);
+            //return new FindHome(this.drone);
+            return findHomeFactory.createSearch(this.drone,false);
         }
 
         if (this.counter == 4) {
-            return new StraightLine(this.drone, true);
+
+            //return new StraightLine(this.drone, true);
+            return straightLineFactory.createSearch(this.drone, true);
         }
         return this;
     }
