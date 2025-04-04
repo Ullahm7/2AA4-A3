@@ -1,12 +1,9 @@
 package ca.mcmaster.se2aa4.island.team25;
 
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
 public class StraightLine implements SearchMethodInfo {
 
-    //private final Logger logger = LogManager.getLogger();
     private Drone drone;
 
     private int counter = -1;
@@ -23,7 +20,7 @@ public class StraightLine implements SearchMethodInfo {
     private FullUTurnFactory fullUTurnFactory;
 
     public StraightLine(Drone drone, boolean flipped) {
-        //logger.info("*** STARTING A STRAIGHT ***"+flipped);
+        
         this.drone = drone;
         this.flipped = flipped;
         this.findHomeFactory = new FindHomeFactory();
@@ -31,9 +28,9 @@ public class StraightLine implements SearchMethodInfo {
         this.fullUTurnFactory = new FullUTurnFactory();
     }
 
-    @Override
+    
     public JSONObject nextStep() {
-        //logger.info("***STRAIGHT NEXT STEP || " + (this.counter+1));
+        
         this.counter += 1;
 
         if (counter == 0) {
@@ -53,9 +50,9 @@ public class StraightLine implements SearchMethodInfo {
         }
     }
 
-    @Override
+    
     public void giveInfo(JSONObject info) {
-        //logger.info("*** Check response");
+        
         if (info.has("found")) {
             if (this.checkEnd) {
                 this.checkEnd = false;
@@ -70,21 +67,21 @@ public class StraightLine implements SearchMethodInfo {
 
     @Override
     public SearchMethod searchType() {
-        //logger.info("FLIPPED: " + this.flipped);
+        
         if (drone.goHome()) {
-            //return new FindHome(this.drone);
+            
             return findHomeFactory.createSearch(this.drone, this.flipped);
         } 
         if (!this.isEnd && !this.flipped) {
-            //return new FullUTurn(this.drone);
+            
             return fullUTurnFactory.createSearch(this.drone, this.flipped);
         }
         if (!this.isEnd && this.flipped) {
-            //return new FindHome(this.drone);
+            
             return findHomeFactory.createSearch(this.drone, this.flipped);
         }
         if (!this.echoAhead) {
-            //return new SideCheck(this.drone, this.flipped);
+            
             return sideCheckFactory.createSearch(this.drone, this.flipped);
         }
         return this;

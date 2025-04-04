@@ -1,12 +1,9 @@
 package ca.mcmaster.se2aa4.island.team25;
-
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
 public class SideCheck implements SearchMethodInfo {
 
-    //private final Logger logger = LogManager.getLogger();
+    
     private Drone drone;
     private Direction currentDir;
     private UTurnFactory uTurnFactory;
@@ -32,7 +29,7 @@ public class SideCheck implements SearchMethodInfo {
         if (this.flipped) {
             this.currentDir = this.drone.currentDir().turnLeft().turnLeft();
         }
-        //logger.info("*** SIDE CHECK STEP WITH DIR: " + this.currentDir.toString() + " " + this.drone.currentDir().toString() + " " + this.flipped);
+        
         if (this.sideCheck) {
             if (this.currentDir == Direction.NORTH) {
                 return this.drone.radarDirection(this.drone.currentDir().turnRight());
@@ -80,13 +77,13 @@ public class SideCheck implements SearchMethodInfo {
     public SearchMethod searchType() {
         if (drone.goHome()) {
 
-            //return new FindHome(this.drone);
+            
             return findHomeFactory.createSearch(this.drone, this.flipped);
 
         }
         if (this.fullTurn || this.emptySide) {
 
-            //return new UTurn(this.drone, this.flipped);
+            
             return uTurnFactory.createSearch(this.drone, this.flipped);
 
         }

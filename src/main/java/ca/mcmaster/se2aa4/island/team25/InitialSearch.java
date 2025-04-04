@@ -1,12 +1,8 @@
 package ca.mcmaster.se2aa4.island.team25;
 
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
 public class InitialSearch implements SearchMethodInfo {
-
-    //private final Logger logger = LogManager.getLogger();
 
     private Drone drone;
     protected int stepNum = -1;
@@ -58,11 +54,8 @@ public class InitialSearch implements SearchMethodInfo {
 
     public SearchMethod searchType() {
         if (this.searchDone) {
-            //logger.info("*** FINISING INITIAL ***");
-            //return new StraightLine(this.drone, false);
             return straightLineFactory.createSearch(this.drone, false);
         } else if (drone.goHome()) {
-            //return new FindHome(this.drone);
             return findHomeFactory.createSearch(this.drone, false);  
         } 
         else {
