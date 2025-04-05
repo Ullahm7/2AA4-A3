@@ -64,4 +64,5 @@ public class InitialSearch implements SearchMethodInfo {
             return this;
         }
     }
+    
 }

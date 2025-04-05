@@ -1,6 +1,11 @@
-package ca.mcmaster.se2aa4.island.team25;
+package ca.mcmaster.se2aa4.island.team25.Searches;
 
 import org.json.JSONObject;
+
+import ca.mcmaster.se2aa4.island.team25.Action;
+import ca.mcmaster.se2aa4.island.team25.Direction;
+import ca.mcmaster.se2aa4.island.team25.Drone;
+import ca.mcmaster.se2aa4.island.team25.SearchMethod;
 
 public class FindHome implements SearchMethod {
 

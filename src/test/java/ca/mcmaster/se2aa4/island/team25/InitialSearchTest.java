@@ -7,6 +7,9 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ca.mcmaster.se2aa4.island.team25.Searches.FindHome;
+import ca.mcmaster.se2aa4.island.team25.Searches.StraightLine;
+
 public class InitialSearchTest {
     private Drone drone;
     private InitialSearch initialSearch;
