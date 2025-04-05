@@ -1,9 +1,9 @@
 package ca.mcmaster.se2aa4.island.team25;
 import org.json.JSONObject;
+import ca.mcmaster.se2aa4.island.team25.Factories.*;
 
 public class SideCheck implements SearchMethodInfo {
 
-    
     private Drone drone;
     private Direction currentDir;
     private UTurnFactory uTurnFactory;
@@ -24,7 +24,6 @@ public class SideCheck implements SearchMethodInfo {
         this.findHomeFactory = new FindHomeFactory();
     }
 
-    @Override
     public JSONObject nextStep() {
         if (this.flipped) {
             this.currentDir = this.drone.currentDir().turnLeft().turnLeft();
@@ -46,7 +45,6 @@ public class SideCheck implements SearchMethodInfo {
 
     }
 
-    @Override
     public void giveInfo(JSONObject info) {
         if (info.has("found")) {
             if ("OUT_OF_RANGE".equals(info.getString("found")) && this.frontCheck && (info.getInt("range") < 3)) {
@@ -73,7 +71,6 @@ public class SideCheck implements SearchMethodInfo {
         }
     }
 
-    @Override
     public SearchMethod searchType() {
         if (drone.goHome()) {
 

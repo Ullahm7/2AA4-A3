@@ -11,7 +11,7 @@ public class FindHome implements SearchMethod {
     }
 
     public JSONObject nextStep() {
-        //logger.info("Going home");
+    
         if (drone.mustStop()) {
             return this.drone.simpleAction(Action.STOP);
         } else {

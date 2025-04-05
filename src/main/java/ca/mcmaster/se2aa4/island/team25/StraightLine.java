@@ -1,6 +1,7 @@
 package ca.mcmaster.se2aa4.island.team25;
 
 import org.json.JSONObject;
+import ca.mcmaster.se2aa4.island.team25.Factories.*;
 
 public class StraightLine implements SearchMethodInfo {
 
@@ -65,7 +66,6 @@ public class StraightLine implements SearchMethodInfo {
         }
     }
 
-    @Override
     public SearchMethod searchType() {
         
         if (drone.goHome()) {

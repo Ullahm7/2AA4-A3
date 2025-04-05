@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 public class Drone {
 
-    private Direction direction; //may change protected
+    private Direction direction; 
     private Battery battery;
     private Coordinate currentCord;
 
@@ -14,7 +14,7 @@ public class Drone {
         this.currentCord = new Coordinate(0, 0);
         this.direction = Direction.charToDir(heading);
         this.battery = new Battery(battery);
-        
+
     }
    
     public boolean goHome() {

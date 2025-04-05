@@ -6,4 +6,5 @@ public interface SearchMethod {
 
     JSONObject nextStep();
     SearchMethod searchType();
+    
 }

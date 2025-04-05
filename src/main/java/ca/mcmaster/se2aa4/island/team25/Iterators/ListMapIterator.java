@@ -1,8 +1,10 @@
-package ca.mcmaster.se2aa4.island.team25;
+package ca.mcmaster.se2aa4.island.team25.Iterators;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import ca.mcmaster.se2aa4.island.team25.InterestPoint;
 
 public class ListMapIterator implements Iterator {
 
@@ -13,15 +15,13 @@ public class ListMapIterator implements Iterator {
         this.interestPoints = interestPoints;
     }
 
-    @Override
     public boolean hasNext() {
         return currentIndex < interestPoints.size();
     }
 
-    @Override
     public Object next() {
         if (!hasNext()) {
-            throw new NoSuchElementException(); //or return null
+            throw new NoSuchElementException(); 
         }
         return interestPoints.get(currentIndex++);
     }

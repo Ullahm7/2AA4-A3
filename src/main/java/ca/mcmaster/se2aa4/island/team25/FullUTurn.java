@@ -1,12 +1,11 @@
 package ca.mcmaster.se2aa4.island.team25;
 
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
+
+import ca.mcmaster.se2aa4.island.team25.Factories.*;
 
 public class FullUTurn implements SearchMethod {
 
-    //private final Logger logger = LogManager.getLogger();
     private Drone drone;
 
     private int counter = 0;
@@ -22,10 +21,8 @@ public class FullUTurn implements SearchMethod {
         this.straightLineFactory = new StraightLineFactory();
     }
 
-    @Override
     public JSONObject nextStep() {
-        //logger.info("*** STOPPING ***" + (this.counter + 1));
-        //testing
+ 
         this.counter++;
         if (this.counter == 1 || this.counter == 3) {
             return this.drone.simpleAction(Action.FLY);
@@ -39,13 +36,12 @@ public class FullUTurn implements SearchMethod {
     @Override
     public SearchMethod searchType() {
         if (drone.goHome()) {
-            //return new FindHome(this.drone);
+           
             return findHomeFactory.createSearch(this.drone,false);
         }
 
         if (this.counter == 4) {
 
-            //return new StraightLine(this.drone, true);
             return straightLineFactory.createSearch(this.drone, true);
         }
         return this;

@@ -1,12 +1,10 @@
 package ca.mcmaster.se2aa4.island.team25;
 
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
+import ca.mcmaster.se2aa4.island.team25.Factories.*;
 
 public class UTurn implements SearchMethod {
 
-    //private final Logger logger = LogManager.getLogger();
     private Drone drone;
     
     private int turnCount = -1;
@@ -27,11 +25,8 @@ public class UTurn implements SearchMethod {
         this.straightLineFactory = new StraightLineFactory();
     }
 
-    @Override
     public JSONObject nextStep() {
 
-        //logger.info("*** IN UTURN");
-       
         if (turnCount == -1) {
             this.turnCount++;
             return this.drone.radarDirection(this.drone.currentDir());
@@ -49,22 +44,16 @@ public class UTurn implements SearchMethod {
         }
     }
 
-    
-    //public void giveInfo(JSONObject info) {
-        
-    //}
-
-    @Override
     public SearchMethod searchType() {
         if (drone.goHome()) {
-            //return new FindHome(this.drone);
+            
             return findHomeFactory.createSearch(this.drone, this.flipped);
 
         }
         if (turnCount < 2) {
             return this;
         }
-        //return new StraightLine(this.drone, this.flipped);
+        
         return straightLineFactory.createSearch(this.drone, this.flipped);
     }
 }
